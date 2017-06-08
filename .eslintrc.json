@@ -1,0 +1,14 @@
+{
+  "extends": "eslint-config-airbnb",
+  "env": {
+    "mocha": true,
+    "node": true
+  },
+  "rules": {
+    "semi": [2, "never"],
+    "padded-blocks": 0,
+    "no-use-before-define": [2, "nofunc"],
+    "no-unused-expressions": 0,
+    "no-param-reassign": 0
+  }
+}
