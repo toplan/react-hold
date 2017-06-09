@@ -1,5 +1,7 @@
 .babelrc
 .eslintrc.json
+.editorconfig
+.travis.yml
 .idea/
+examples/
 node_modules/
-test/

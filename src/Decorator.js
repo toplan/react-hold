@@ -4,145 +4,10 @@
 import React, { Component } from 'react'
 import { render, findDOMNode, unmountComponentAtNode } from 'react-dom'
 import PropTypes from 'prop-types'
+import { isNull, isFunction, getNodeSize, hasOwnProperty } from './utils'
+import Fill from './holders/Fill'
 
-const wrapperDefaultStyle = {
-  position: 'relative',
-  padding: '0px',
-  margin: '0px',
-  width: '100%',
-  height: '100%',
-  border: 'none',
-  overflow: 'hidden'
-}
-
-const getNodeSize = (node) => {
-  return node && {
-    width: node.offsetWidth,
-    height: node.offsetHeight
-  }
-}
-
-const isNull = (value) => value === void 0 || value === null
-
-const isFunction = (value) => typeof value === 'function'
-
-const Fill = ({ color, width, height, children, align = 'center'}) => {
-  return <div style={{ textAlign: align }}>
-    <div style={{
-      display: 'inline-block',
-      background: color,
-      width: width,
-      height: height,
-      lineHeight: typeof height === 'number' ? `${height}px` : height,
-      textAlign: 'center'
-    }}>
-      { children }
-    </div>
-  </div>
-}
-
-Fill.propTypes = {
-  color: PropTypes.string,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  align: PropTypes.string
-}
-
-class Square extends Component {
-  static propTypes = {
-    color: PropTypes.string,
-    width: PropTypes.number,
-    height: PropTypes.number,
-    align: PropTypes.string
-  }
-
-  constructor(...args) {
-    super(...args)
-
-    this.state = {
-      side: null
-    }
-  }
-
-  componentWillMount() {
-    this.updateSide(this.props.width, this.props.height)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.updateSide(nextProps.width, nextProps.height)
-  }
-
-  updateSide(width, height) {
-    if (!isNull(width) && !isNull(height)) {
-      this.setState({ side: width > height ? height : width })
-    } else if (!isNull(width)) {
-      this.setState({ side: width })
-    } else if (!isNull(height)) {
-      this.setState({ side: height })
-    }
-  }
-
-  render() {
-    const { color, children, align = 'center' } = this.props
-    const { side } = this.state
-    return <div style={{ textAlign: align }}>
-      <div style={{
-        display: 'inline-block',
-        background: color,
-        width: side,
-        height: side,
-        lineHeight: `${side}px`,
-        textAlign: 'center'
-      }}>
-        { children }
-      </div>
-    </div>
-  }
-}
-
-const Circle = ({ color, width, height, children, align }) => {
-  return <Square color="transparent" width={ width } height={ height } align={ align }>
-      <div style={{
-        background: color,
-        width: '100%',
-        height: '100%',
-        borderRadius: '50%'
-      }}>
-        { children }
-      </div>
-    </Square>
-}
-
-Circle.propTypes = Square.propTypes
-
-const Text = ({ color, length = 300, align = 'left', indent = 30, lineHeight = 2, fontSize }) => {
-  return <div style={{
-      background: 'transparent',
-      textAlign: align,
-      textIndent: indent,
-      lineHeight,
-      fontSize
-    }}>
-      <span style={{
-        background: color,
-        wordBreak: 'break-word',
-        wordWrap: 'break-word'
-      }}>
-        { '\u00A0'.repeat(2 * length) }
-      </span>
-    </div>
-}
-
-Text.propTypes = {
-  color: PropTypes.string,
-  length: PropTypes.number,
-  align: PropTypes.string,
-  indent: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  lineHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-}
-
-const hold = (
+export default function (
   condition,
   {
     holder = Fill,
@@ -154,7 +19,7 @@ const hold = (
   {
     warnings = true
   } = {}
-) => {
+) {
   if (!isFunction(condition)) {
     throw new TypeError('Expected the hold condition to be a function.')
   }
@@ -174,14 +39,14 @@ const hold = (
 
     const wrappedComponentName = WrappedComponent.displayName
       || WrappedComponent.name
-      || typeof WrappedComponent === 'string' ? WrappedComponent : 'Unknown'
+      || (typeof WrappedComponent === 'string' ? WrappedComponent : 'Unknown')
 
     const checkRootNodeTagName = (name) => {
       if (name.toUpperCase() !== 'DIV') {
         warn(
           '[react-hold]',
-          `Please make sure not to use the root tag's name('${name.toLowerCase()}') which in component '${wrappedComponentName}' as a selector in your css files.`,
-          `If sure, please ignore this or setting 'warnings' to false.`
+          `Please make sure not to use the root tag's name('${ name.toLowerCase() }') which in component '${ wrappedComponentName }' as a selector in your css files.`,
+          `If sure, ignore this warning, or setting 'warnings' to false.`
         )
       }
     }
@@ -212,7 +77,7 @@ const hold = (
     const restoreOriginLifecycleMethods = (methods) => {
       if (WrappedComponent.prototype) {
         for (let name in methods) {
-          if (methods.hasOwnProperty(name) && isFunction(methods[name])) {
+          if (hasOwnProperty(methods, name) && isFunction(methods[name])) {
             WrappedComponent.prototype[name] = methods[name]
           }
         }
@@ -245,7 +110,7 @@ const hold = (
     }
 
     return class Hold extends Component {
-      static displayName = `Hold(${wrappedComponentName})`
+      static displayName = `Hold(${ wrappedComponentName })`
 
       constructor(...args) {
         super(...args)
@@ -298,7 +163,7 @@ const hold = (
         if (!envDom || !attributes) return
 
         for (let name in attributes) {
-          if (attributes.hasOwnProperty(name)) {
+          if (hasOwnProperty(attributes, name)) {
             if (typeof attributes[name] !== 'undefined') {
               envDom.setAttribute(name, attributes[name])
             }
@@ -336,15 +201,12 @@ const hold = (
   }
 }
 
-// holders
-hold.Fill = Fill
-hold.Square = Square
-hold.Circle = Circle
-hold.Text = Text
-
-// align constant
-hold.LEFT = 'left'
-hold.CENTER = 'center'
-hold.RIGHT = 'right'
-
-export default hold
+const wrapperDefaultStyle = {
+  position: 'relative',
+  padding: '0px',
+  margin: '0px',
+  width: '100%',
+  height: '100%',
+  border: 'none',
+  overflow: 'hidden'
+}

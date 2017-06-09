@@ -1,0 +1,9 @@
+.container {
+    position: relative;
+    padding: 0 15px;
+    margin: 0 10%;
+
+    .content {
+        margin-top: 30px
+    }
+}
