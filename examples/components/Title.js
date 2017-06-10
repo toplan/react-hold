@@ -10,8 +10,4 @@ const Title = function ({ size = 1, className, children }) {
   return React.createElement(`h${size}`, { className }, children)
 }
 
-export default hold(
-  (props) => !props.children,
-  { },
-  { warnings: false }
-)(Title)
+export default hold((props) => !props.children)(Title)

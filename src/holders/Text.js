@@ -5,7 +5,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { LEFT } from '../align'
 
-const Text = ({ color, length = 300, align = LEFT, indent = 30, lineHeight = 2, fontSize }) => {
+const Text = ({ color, length = 100, align = LEFT, indent = 30, lineHeight = 1.7, fontSize }) => {
   return <div style={{
       background: 'transparent',
       textAlign: align,
