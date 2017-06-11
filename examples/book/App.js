@@ -22,7 +22,7 @@ class App extends Component {
       this.setState({
         titleClass: 'height-50'
       })
-    }, 4000)
+    }, 3000)
   }
 
   changeTile = (e) => {

@@ -78,7 +78,6 @@ export default function (condition, {
           height // holder's height
         }
         this.originNodeStyle = null
-        this.originNodeAttribues = null
       }
 
       componentWillMount() {
@@ -111,14 +110,11 @@ export default function (condition, {
         if (this.state.hold) {
           replaceWrappedComponentLifecycleMethods()
           if (this.state.copy) {
-            this.originNodeAttribues = this.getOriginNodeAttributes()
             this.originNodeStyle = this.computeOriginNodeStyle()
             this.setState({ copy: false })
-          } else if (!isNull(this.originNodeStyle) || !isNull(this.originNodeAttribues)) {
-            this.setFakeNodeAttributes(this.originNodeAttribues)
+          } else if (!isNull(this.originNodeStyle)) {
             this.setFakeNodeStyle(this.originNodeStyle)
             this.updateHolderSizeIfNecessary()
-            this.originNodeAttribues = null
             this.originNodeStyle = null
           }
         }
@@ -133,48 +129,23 @@ export default function (condition, {
         this.setState({ hold: false })
       }
 
-      getOriginNodeAttributes() {
-        const result = {}
+      computeOriginNodeStyle() {
+        let result = null
         const originNode = findDOMNode(this)
-        const attributes = originNode.attributes
-        let len = attributes.length, att
-        while (len--) {
-          att = attributes[len]
-          result[att.name] = att.value
+        // set 'display' to 'none' before get computed style is very **important**
+        // don't remove or move this step!
+        originNode.style.display = 'none'
+
+        const computedStyle = window.getComputedStyle(originNode, null)
+        for (let key in computedStyle) {
+          if (/[0-9]+/.test(key)) {
+            const name = computedStyle[key]
+            if (name === 'display') continue
+            result = result || {}
+            result[name] = computedStyle.getPropertyValue(name)
+          }
         }
         return result
-      }
-
-      computeOriginNodeStyle() {
-        const originNode = findDOMNode(this)
-        originNode.style.display = 'none'
-        try {
-          const style = getComputedStyle(originNode, '')
-          return {
-            margin: style.margin,
-            padding: style.padding,
-            border: style.border,
-            width: style.width,
-            height: style.height,
-            fontSize: style.fontSize,
-            lineHeight: style.lineHeight
-          }
-        } catch (e) {
-        }
-      }
-
-      setFakeNodeAttributes(attributes) {
-        const fake = this.refs.fake
-        if (isNull(fake) || isNull(attributes)) return
-
-        for (let name in attributes) {
-          if (hasOwnProperty(attributes, name)) {
-            if (typeof attributes[name] !== 'undefined') {
-              fake.setAttribute(name, attributes[name])
-            }
-          }
-        }
-        fake.style.background = 'transparent'
       }
 
       setFakeNodeStyle(style) {
@@ -187,7 +158,10 @@ export default function (condition, {
             if (value) fake.style[name] = value
           }
         }
+
+        // fix background and border color!
         fake.style.background = 'transparent'
+        fake.style.borderColor = 'transparent'
       }
 
       updateHolderSizeIfNecessary = () => {
