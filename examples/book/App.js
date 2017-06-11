@@ -20,7 +20,7 @@ class App extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.setState({
-        titleClass: 'height-50'
+        squareSide: 50
       })
     }, 3000)
   }
@@ -28,8 +28,7 @@ class App extends Component {
   changeTile = (e) => {
     const title = e.target.value
     this.setState({
-      title,
-      desc: title
+      title
     })
   }
 
@@ -40,9 +39,9 @@ class App extends Component {
           <Title className={this.state.titleClass}>{this.state.title}</Title>
         </div>
         <div className="recommended">
-
         </div>
-                <p>
+
+        <p>
           <input type="text" value={this.state.title} onChange={this.changeTile}/>
         </p>
         <div>
@@ -72,13 +71,12 @@ const Img = hold((props) => !props.src, {
   holder: hold.Square,
   align: hold.RIGHT,
   children: <img src={logo} className="App-logo" alt="logo" style={{verticalAlign: 'middle'}}/>
-})(({ src }) => {
-  return <div className="App-header">{ src }</div>
+})(({ src, height }) => {
+  return <div style={{ height }}>{ src }</div>
 })
 
 const Avatar = hold((props) => !props.src, {
-  holder: hold.Circle,
-  children: ''
+  holder: hold.Circle
 })(({ src, height }) => {
   return <img src={ src } style={{ height }}/>
 })
@@ -91,8 +89,6 @@ const Text = hold((props) => !props.children, {
   </p>
 })
 
-const P = hold(
-  (props) => !props.children,
-  {
-    holder: hold.Text
-  })('p')
+const P = hold((props) => !props.children, {
+  holder: hold.Text
+})('p')

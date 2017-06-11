@@ -4,7 +4,7 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import PropTypes from 'prop-types'
-import { isNull, isFunction, getNodeSize, hasOwnProperty } from './utils'
+import { isNull, isObject, isFunction, hasOwnProperty, getNodeSize, getComputedStyle } from './utils'
 import Fill from './holders/Fill'
 
 export default function (condition, {
@@ -20,7 +20,7 @@ export default function (condition, {
 
   return (WrappedComponent) => {
     if (!isFunction(WrappedComponent) && typeof WrappedComponent !== 'string') {
-      throw new TypeError('Expected the wrapped component to be a react/dom component.')
+      throw new TypeError('Expected the wrapped component to be a react or dom component.')
     }
 
     const wrappedComponentName = WrappedComponent.displayName
@@ -108,8 +108,8 @@ export default function (condition, {
 
       componentDidUpdate() {
         if (this.state.hold) {
-          replaceWrappedComponentLifecycleMethods()
           if (this.state.copy) {
+            replaceWrappedComponentLifecycleMethods()
             this.originNodeStyle = this.computeOriginNodeStyle()
             this.setState({ copy: false })
           } else if (!isNull(this.originNodeStyle)) {
@@ -132,36 +132,47 @@ export default function (condition, {
       computeOriginNodeStyle() {
         let result = null
         const originNode = findDOMNode(this)
+        // store 'display' property
+        let computedStyle = getComputedStyle(originNode, null)
+        let originDisplay = computedStyle.getPropertyValue('display')
         // set 'display' to 'none' before get computed style is very **important**
         // don't remove or move this step!
         originNode.style.display = 'none'
-
-        const computedStyle = window.getComputedStyle(originNode, null)
+        // compute node style
+        computedStyle = getComputedStyle(originNode, null)
         for (let key in computedStyle) {
           if (/[0-9]+/.test(key)) {
             const name = computedStyle[key]
-            if (name === 'display') continue
             result = result || {}
-            result[name] = computedStyle.getPropertyValue(name)
+            if (name === 'display') {
+              result.display = originDisplay
+            } else {
+              result[name] = computedStyle.getPropertyValue(name)
+            }
           }
         }
         return result
       }
 
       setFakeNodeStyle(style) {
-        if (isNull(style)) return
+        if (!isObject(style)) return
 
         const fake = this.refs.fake
+        // hidden element
+        fake.style.display = 'none'
+        // set style
         for (let name in style) {
-          if (hasOwnProperty(style, name)) {
-            const value = style[name]
-            if (value) fake.style[name] = value
+          if (hasOwnProperty(style, name) && name !== 'display') {
+            fake.style[name] = style[name]
           }
         }
-
-        // fix background and border color!
+        // fix style
+        fake.style.opacity = 1
         fake.style.background = 'transparent'
         fake.style.borderColor = 'transparent'
+        let display = style.display
+        if (display === 'inline' || display === 'inline-block') display = 'block'
+        fake.style.display = display
       }
 
       updateHolderSizeIfNecessary = () => {

@@ -1,7 +1,7 @@
 {
   "name": "react-hold",
   "version": "0.0.1",
-  "description": "A higher-order component for react which hold the empty presentational components.",
+  "description": "Hold the empty presentational components in react.",
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf lib dist",
