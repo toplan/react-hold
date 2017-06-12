@@ -1,8 +1,6 @@
-/**
- * Created by toplan on 17/6/9.
- */
 import React from 'react'
 import PropTypes from 'prop-types'
+import shapes from '../shapes'
 import { CENTER } from '../align'
 
 const Fill = ({ color, width, height, children, align = CENTER}) => {
@@ -21,7 +19,7 @@ const Fill = ({ color, width, height, children, align = CENTER}) => {
 }
 
 Fill.propTypes = {
-  color: PropTypes.string,
+  ...shapes,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   align: PropTypes.string

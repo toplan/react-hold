@@ -1,6 +1,3 @@
-/**
- * Created by toplan on 17/6/9.
- */
 import React from 'react'
 import Square from './Square'
 

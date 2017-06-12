@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import hold from 'react-hold'
+import hold, { holdable, holders, align } from 'react-hold'
 import './style.css'
 import logo from './logo.svg';
 
@@ -20,6 +20,7 @@ class App extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.setState({
+        titleClass: 'cool',
         squareSide: 50
       })
     }, 3000)
@@ -67,28 +68,23 @@ class App extends Component {
 
 export default App
 
-const Img = hold((props) => !props.src, {
-  holder: hold.Square,
-  align: hold.RIGHT,
+const Img = holdable((props) => !props.src, holders.Square, {
+  align: align.RIGHT,
   children: <img src={logo} className="App-logo" alt="logo" style={{verticalAlign: 'middle'}}/>
 })(({ src, height }) => {
   return <div style={{ height }}>{ src }</div>
 })
 
-const Avatar = hold((props) => !props.src, {
-  holder: hold.Circle
-})(({ src, height }) => {
+const Avatar = holdable((props) => !props.src, holders.Circle)(({ src, height }) => {
   return <img src={ src } style={{ height }}/>
 })
 
-const Text = hold((props) => !props.children, {
-  holder: hold.Text
-})(function ({ children }) {
+const Text = holdable((props) => !props.children, holders.Text)(({ children }) => {
   return <p>
     { children }
   </p>
 })
 
-const P = hold((props) => !props.children, {
-  holder: hold.Text
-})('p')
+const P = hold('p', (props) => !props.children, holders.Text, {
+  length: 300
+})

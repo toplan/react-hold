@@ -1,59 +1,37 @@
-/**
- * Created by toplan on 17/6/9.
- */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { isNull } from '../utils'
+import shapes from '../shapes'
 import { CENTER } from '../align'
+import { isNull } from '../utils'
 
-export default class Square extends Component {
-  static propTypes = {
-    color: PropTypes.string,
-    width: PropTypes.number,
-    height: PropTypes.number,
-    align: PropTypes.string
+const Square = ({ color, width, height, align = CENTER, children }) => {
+  let side = null
+
+  if (!isNull(width) && !isNull(height)) {
+    side = width > height ? height : width
+  } else if (!isNull(width)) {
+    side = width
+  } else if (!isNull(height)) {
+    side = height
   }
 
-  constructor(...args) {
-    super(...args)
-
-    this.state = {
-      side: null
-    }
-  }
-
-  componentWillMount() {
-    this.updateSide(this.props.width, this.props.height)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.updateSide(nextProps.width, nextProps.height)
-  }
-
-  updateSide(width, height) {
-    if (!isNull(width) && !isNull(height)) {
-      this.setState({ side: width > height ? height : width })
-    } else if (!isNull(width)) {
-      this.setState({ side: width })
-    } else if (!isNull(height)) {
-      this.setState({ side: height })
-    }
-  }
-
-  render() {
-    const { color, children, align = CENTER } = this.props
-    const { side } = this.state
-    return <div style={{ textAlign: align }}>
-      <div style={{
-        display: 'inline-block',
-        background: color,
-        width: side,
-        height: side,
-        lineHeight: `${side}px`,
-        textAlign: 'center'
-      }}>
-        { children }
-      </div>
+  return <div style={{ textAlign: align }}>
+    <div style={{
+      display: 'inline-block',
+      background: color,
+      width: side,
+      height: side,
+      lineHeight: `${side}px`,
+      textAlign: 'center'
+    }}>
+      { children }
     </div>
-  }
+  </div>
 }
+
+Square.propTypes = {
+  ...shapes,
+  align: PropTypes.string
+}
+
+export default Square

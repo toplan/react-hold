@@ -1,8 +1,6 @@
-/**
- * Created by toplan on 17/6/9.
- */
 import React from 'react'
 import PropTypes from 'prop-types'
+import shapes from '../shapes'
 import { LEFT } from '../align'
 
 const Text = ({ color, length = 100, align = LEFT, indent = 30, lineHeight = 1.7, fontSize }) => {
@@ -24,7 +22,7 @@ const Text = ({ color, length = 100, align = LEFT, indent = 30, lineHeight = 1.7
 }
 
 Text.propTypes = {
-  color: PropTypes.string,
+  color: shapes.color,
   length: PropTypes.number,
   align: PropTypes.string,
   indent: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

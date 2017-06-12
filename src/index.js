@@ -1,19 +1,19 @@
-/**
- * Created by toplan on 17/6/6.
- */
-import Decorator from './Decorator'
+import hold from './hold'
+import holdable from './holdable'
 import holders from './holders/index'
-import { LEFT, CENTER, RIGHT } from './align'
-import { hasOwnProperty } from './utils'
+import shapes from './shapes'
+import align from './align'
 
-for (let name in holders) {
-  if (hasOwnProperty(holders, name)) {
-    Decorator[name] = holders[name]
-  }
+hold.holdable = holdable
+hold.hoders = holders
+hold.shapes = shapes
+hold.align = align
+
+export default hold
+
+export {
+  holdable,
+  holders,
+  shapes,
+  align
 }
-
-Decorator.LEFT = LEFT
-Decorator.CENTER = CENTER
-Decorator.RIGHT = RIGHT
-
-export default Decorator

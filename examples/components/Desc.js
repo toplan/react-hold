@@ -2,7 +2,7 @@
  * Created by toplan on 17/6/2.
  */
 import React, { Component } from 'react'
-import hold from 'react-hold'
+import { holdable }from 'react-hold'
 
 const style = {
   height: '30px',
@@ -31,4 +31,6 @@ class Desc extends Component {
   }
 }
 
-export default hold((props) => !props.children)(Desc)
+export default holdable((props) => !props.children, {
+  width: '80%'
+})(Desc)
