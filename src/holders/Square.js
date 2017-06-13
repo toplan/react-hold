@@ -1,19 +1,22 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import shapes from '../shapes'
 import { CENTER } from '../align'
 import { isNull } from '../utils'
 
-const Square = ({ color, width, height, align = CENTER, children }) => {
-  let side = null
-
-  if (!isNull(width) && !isNull(height)) {
-    side = width > height ? height : width
-  } else if (!isNull(width)) {
-    side = width
-  } else if (!isNull(height)) {
-    side = height
+const Square = ({ color, width, height, children, side, align = CENTER }) => {
+  if (isNull(side)) {
+    if (!isNull(width) && !isNull(height)) {
+      side = width > height ? height : width
+    } else if (!isNull(width)) {
+      side = width
+    } else if (!isNull(height)) {
+      side = height
+    }
   }
+  const lineHeight = (typeof side === 'string' && side.trim()) ?
+    side : isNull(side) ?
+    null : `${side}px`
 
   return <div style={{ textAlign: align }}>
     <div style={{
@@ -21,7 +24,7 @@ const Square = ({ color, width, height, align = CENTER, children }) => {
       background: color,
       width: side,
       height: side,
-      lineHeight: `${side}px`,
+      lineHeight,
       textAlign: 'center'
     }}>
       { children }
@@ -31,6 +34,7 @@ const Square = ({ color, width, height, align = CENTER, children }) => {
 
 Square.propTypes = {
   ...shapes,
+  side: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   align: PropTypes.string
 }
 

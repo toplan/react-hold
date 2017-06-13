@@ -3,9 +3,9 @@ import hold from './hold'
 /**
  * The decorator make component holdable.
  *
- * @param condition
- * @param holder
- * @param holderProps
+ * @param {Function} condition
+ * @param {Component} holder
+ * @param {Object} holderProps
  * @returns {Function}
  */
 export default function (condition, holder, holderProps) {

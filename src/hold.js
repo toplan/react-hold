@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import { isNull, isObject, isFunction, hasOwnProperty, getNodeSize, getComputedStyle } from './utils'
 import Fill from './holders/Fill'
+import createRefiter from './createRefiter'
 
 /**
  * Hold the target component,
- * and return a holdable higher-order component.
+ * returns a holdable higher-order component.
  *
  * @param {Component} targetComponent
  * @param {Function} condition
@@ -40,42 +41,7 @@ export default function (
     || targetComponent.name
     || (typeof targetComponent === 'string' ? targetComponent : 'Unknown')
 
-  let wrappedComponentOriginalMethods = null
-
-  const replaceTargetComponentLifecycleMethods = () => {
-    let componentDidMount, componentWillUnmount
-    const prototype = targetComponent.prototype
-    if (isNull(wrappedComponentOriginalMethods) && prototype) {
-      if (isFunction(prototype.componentDidMount)) {
-        componentDidMount = prototype.componentDidMount
-        prototype.componentDidMount = null
-      }
-      if (isFunction(prototype.componentWillUnmount)) {
-        componentWillUnmount = prototype.componentWillUnmount
-        prototype.componentWillUnmount = function () {
-          try {
-            componentWillUnmount.call(this)
-          } catch (e) {}
-        }
-      }
-      wrappedComponentOriginalMethods = {
-        componentDidMount,
-        componentWillUnmount
-      }
-    }
-  }
-
-  const restoreTargetComponentLifecycleMethods = () => {
-    const methods = wrappedComponentOriginalMethods
-    if (!isNull(methods) && targetComponent.prototype) {
-      for (let name in methods) {
-        if (hasOwnProperty(methods, name) && isFunction(methods[name])) {
-          targetComponent.prototype[name] = methods[name]
-        }
-      }
-      wrappedComponentOriginalMethods = null
-    }
-  }
+  const refiter = createRefiter(targetComponent)
 
   return class Hold extends Component {
     static displayName = `Hold(${ wrappedComponentName })`
@@ -95,7 +61,7 @@ export default function (
 
     componentWillMount() {
       if (condition.call(null, this.props)) {
-        replaceTargetComponentLifecycleMethods()
+        refiter.refit()
       } else {
         this.cancelHold()
       }
@@ -122,7 +88,7 @@ export default function (
     componentDidUpdate() {
       if (this.state.hold) {
         if (this.state.copy) {
-          replaceTargetComponentLifecycleMethods()
+          refiter.refit()
           this.originNodeStyle = this.computeOriginNodeStyle()
           this.setState({ copy: false })
         } else if (!isNull(this.originNodeStyle)) {
@@ -138,7 +104,7 @@ export default function (
     }
 
     cancelHold = () => {
-      restoreTargetComponentLifecycleMethods()
+      refiter.undo()
       this.setState({ hold: false })
     }
 

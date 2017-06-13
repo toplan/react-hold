@@ -1,8 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import shapes from '../shapes'
 import Square from './Square'
 
-const Circle = ({ color, width, height, children, align }) => {
-  return <Square color="transparent" width={ width } height={ height } align={ align }>
+const Circle = ({ color, width, height, children, diameter, align }) => {
+  return <Square color="transparent" width={ width } height={ height } side={ diameter } align={ align }>
       <div style={{
         background: color,
         width: '100%',
@@ -14,6 +16,9 @@ const Circle = ({ color, width, height, children, align }) => {
     </Square>
 }
 
-Circle.propTypes = Square.propTypes
-
+Circle.propTypes = {
+  ...shapes,
+  diameter: Square.propTypes.side,
+  align: PropTypes.string
+}
 export default Circle
