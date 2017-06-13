@@ -15,8 +15,8 @@ const Square = ({ color, width, height, children, side, align = CENTER }) => {
     }
   }
   const lineHeight = (typeof side === 'string' && side.trim()) ?
-    side : isNull(side) ?
-    null : `${side}px`
+    side : typeof side === 'number' ?
+    `${side}px` : null
 
   return <div style={{ textAlign: align }}>
     <div style={{
@@ -24,8 +24,8 @@ const Square = ({ color, width, height, children, side, align = CENTER }) => {
       background: color,
       width: side,
       height: side,
-      lineHeight,
-      textAlign: 'center'
+      textAlign: 'center',
+      lineHeight
     }}>
       { children }
     </div>

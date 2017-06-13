@@ -61,6 +61,9 @@ class App extends Component {
           <Text>{this.state.title}</Text>
         </div>
         <P style={{ padding: '10px 20px' }}>{this.state.title}</P>
+        <div>
+          <Table height={this.state.squareSide}/>
+        </div>
       </div>
     )
   }
@@ -87,4 +90,12 @@ const Text = holdable((props) => !props.children, holders.Text)(({ children }) =
 
 const P = hold('p', (props) => !props.children, holders.Text, {
   length: 300
+})
+
+const Table = hold(({ height }) => {
+  return <div style={{ height }}>
+  </div>
+}, () => true, holders.Table, {
+  width: 300,
+  align: 'center'
 })

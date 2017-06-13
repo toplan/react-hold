@@ -16,7 +16,7 @@ const Text = ({ color, length = 100, align = LEFT, indent = 30, lineHeight = 1.7
         wordBreak: 'break-word',
         wordWrap: 'break-word'
       }}>
-        { '\u00A0'.repeat(2 * length) }
+        { '\u00A0\u00A0'.repeat(length) }
       </span>
     </div>
 }
