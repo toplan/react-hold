@@ -2,18 +2,20 @@
  * Created by toplan on 17/6/2.
  */
 import React, { Component } from 'react'
-import { holdable }from 'react-hold'
+import { holdable, align } from 'react-hold'
 
 const style = {
-  height: '30px',
-  padding: '0 20px'
+  height: '30px'
 }
 
-class Desc extends Component {
-  constructor(...args) {
-    super(...args)
+@holdable(
+  (props) => !props.children,
+  {
+    align: align.LEFT,
+    width: '80%'
   }
-
+)
+export default class Desc extends Component {
   componentWillMount() {
     console.log('Desc', 'will mount')
   }
@@ -27,10 +29,6 @@ class Desc extends Component {
   }
 
   render() {
-    return <div id="title-1" className="title" style={ style }>{ this.props.children }</div>
+    return <div className="desc" style={ style }>{ this.props.children }</div>
   }
 }
-
-export default holdable((props) => !props.children, {
-  width: '80%'
-})(Desc)

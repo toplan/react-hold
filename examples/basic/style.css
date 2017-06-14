@@ -1,0 +1,25 @@
+section {
+    margin-bottom: 15px;
+}
+
+h3 {
+    border-bottom: 1px solid #ddd;
+}
+
+.container {
+    position: relative;
+    padding: 0 15px;
+    margin: 30px 10%;
+}
+
+.circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.change-style-to {
+    width: 36%;
+    opacity: 0.6;
+}

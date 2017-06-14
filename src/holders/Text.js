@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import shapes from '../shapes'
 import { LEFT } from '../align'
 
+const $nbsp = '\u00A0'
+
 const Text = ({ color, length = 100, align = LEFT, indent = 30, lineHeight = 1.7, fontSize }) => {
   return <div style={{
       background: 'transparent',
@@ -16,7 +18,7 @@ const Text = ({ color, length = 100, align = LEFT, indent = 30, lineHeight = 1.7
         wordBreak: 'break-word',
         wordWrap: 'break-word'
       }}>
-        { '\u00A0\u00A0'.repeat(length) }
+        { `${$nbsp.repeat(2)}`.repeat(length) }
       </span>
     </div>
 }

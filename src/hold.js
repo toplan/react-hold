@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
-import { isNull, isObject, isFunction, hasOwnProperty, getNodeSize, getComputedStyle } from './utils'
+import { isNull, isObject, isFunction, hasOwnProperty, getNodeSize, getComputedStyle, getComponentName, warn } from './utils'
 import Fill from './holders/Fill'
 import createRefiter from './createRefiter'
+const $nbsp = '\u00A0'
 
 /**
  * Hold the target component,
@@ -37,9 +38,7 @@ export default function (
   holderProps.width = !isNull(holderProps.width) ? holderProps.width : null
   holderProps.height = !isNull(holderProps.height) ? holderProps.height : null
 
-  const wrappedComponentName = targetComponent.displayName
-    || targetComponent.name
-    || (typeof targetComponent === 'string' ? targetComponent : 'Unknown')
+  const wrappedComponentName = getComponentName(targetComponent)
 
   const refiter = createRefiter(targetComponent)
 
@@ -56,6 +55,7 @@ export default function (
         width: holderProps.width, // holder's width
         height: holderProps.height // holder's height
       }
+      // The style value of original node
       this.originNodeStyle = null
     }
 
@@ -111,25 +111,44 @@ export default function (
     computeOriginNodeStyle() {
       let result = null
       const originNode = findDOMNode(this)
-      // store 'display' property
+
+      // compute original 'display' and 'position' property
       let computedStyle = getComputedStyle(originNode, null)
-      let originDisplay = computedStyle.getPropertyValue('display')
-      // set 'display' to 'none' before get computed style is very **important**
-      // don't remove or move this step!
-      originNode.style.display = 'none'
-      // compute node style
-      computedStyle = getComputedStyle(originNode, null)
+      const originDisplay = computedStyle.getPropertyValue('display')
+      const position = computedStyle.getPropertyValue('position')
+
+      // if position is 'absolute' or 'fixed',
+      // check the width and height of original node,
+      // otherwise recompute the style of original node.
+      if (position === 'absolute' || position === 'fixed') {
+        const width = computedStyle.getPropertyValue('width')
+        const height = computedStyle.getPropertyValue('height')
+        if (height === '0px' && isNull(holderProps.height)) {
+          warn(`The holder(${ getComponentName(holder) }) of component(${ wrappedComponentName }) expected the height props.`)
+        }
+        if (width === '0px' && isNull(holderProps.width)) {
+          warn(`The holder(${ getComponentName(holder) }) of component(${ wrappedComponentName }) expected the width props.`)
+        }
+      } else {
+        // set display to 'none' before recompute is very **important**,
+        // don't remove or move this step!
+        originNode.style.display = 'none'
+        // compute node style
+        computedStyle = getComputedStyle(originNode, null)
+      }
+
       for (let key in computedStyle) {
         if (/[0-9]+/.test(key)) {
           const name = computedStyle[key]
           result = result || {}
           if (name === 'display') {
-            result.display = originDisplay
+            result[name] = originDisplay
           } else {
             result[name] = computedStyle.getPropertyValue(name)
           }
         }
       }
+
       return result
     }
 
@@ -150,12 +169,12 @@ export default function (
       fake.style.background = 'transparent'
       fake.style.borderColor = 'transparent'
       let display = style.display
-      if (display === 'inline' || display === 'inline-block') display = 'block'
+      if (display === 'inline') display = 'inline-block'
       fake.style.display = display
     }
 
     updateHolderSizeIfNecessary = () => {
-      const env = this.refs.env
+      const { env } = this.refs
       if (!env) return
 
       const size = getNodeSize(env)
@@ -174,7 +193,7 @@ export default function (
       if (typeof props.children === 'string') {
         props.children = props.children.trim()
       }
-      props.children = props.children || '\u00A0'
+      props.children = props.children || $nbsp
 
       return <div ref="fake">
         <div ref="env" style={ envStyle }>

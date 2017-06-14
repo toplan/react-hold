@@ -3,7 +3,7 @@ import { isNull, isFunction, hasOwnProperty } from './utils'
 export const symbol = Symbol ? Symbol('react-hold/refiter') : '$$react-hold/refiter'
 
 /**
- * Create api to refit the component's lifecycle methods.
+ * Create APIs to refit the component lifecycle methods.
  *
  * @param {Component} component
  * @returns {{refit, undo}}

@@ -2,22 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import shapes from '../shapes'
 import { CENTER } from '../align'
+import { warn } from '../utils'
+
 const COLS = 2
 const ROWS = 2
 const GAP = 2
+const $nbsp = '\u00A0'
 
 const computeCellSide = (total, number, gap) => {
   if (total <= 0) return 0
   const gapNumber = number === 1 ? 0 : number - 1
   let rest = total - (gapNumber * gap)
   if (rest <= 0) {
-    const errMsg = `Expected option gap lower than ${ total / gapNumber }, current ${ gap }. Default ${ GAP }.`
-    if (process.env.NODE_ENV !== 'production') {
-      throw new TypeError(errMsg)
-    } else if(console) {
-      console.warn(errMsg)
-    }
-    return 0
+    warn(`Expected option gap lower than ${ total / gapNumber }, current ${ gap }. Default ${ GAP }.`)
+    rest = 0
   }
   return rest / number
 }
@@ -63,7 +61,7 @@ const Table = ({ color, width, height, children, cols = COLS, rows = ROWS, gap =
       width: width,
       height: height
     }}>
-      { '\u00A0' }
+      { $nbsp }
       { cells }
     </div>
   </div>
