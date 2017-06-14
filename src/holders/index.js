@@ -9,7 +9,7 @@ export {
   Square,
   Circle,
   Text,
-  Table
+  Table,
 }
 
 export default {
@@ -17,6 +17,6 @@ export default {
   Square,
   Circle,
   Text,
-  Table
+  Table,
 }
 

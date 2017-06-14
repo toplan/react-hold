@@ -14,57 +14,63 @@ const computeCellSide = (total, number, gap) => {
   const gapNumber = number === 1 ? 0 : number - 1
   let rest = total - (gapNumber * gap)
   if (rest <= 0) {
-    warn(`Expected option gap lower than ${ total / gapNumber }, current ${ gap }. Default ${ GAP }.`)
+    warn(`Expected option gap lower than ${total / gapNumber}, current ${gap}. Default ${GAP}.`)
     rest = 0
   }
   return rest / number
 }
 
-const Table = ({ color, width, height, children, cols = COLS, rows = ROWS, gap = GAP, align = CENTER }) => {
+const Table = ({ color, width, height, children, cols, rows, gap, align }) => {
   cols = Math.ceil(cols)
   rows = Math.ceil(rows)
 
-  if (cols < 1) throw new TypeError(`Expected option cols greater than '0'.`)
-  if (rows < 1) throw new TypeError(`Expected option rows greater than '0'.`)
+  if (cols < 1) throw new TypeError('Expected option cols greater than 0.')
+  if (rows < 1) throw new TypeError('Expected option rows greater than 0.')
 
   const cellWidth = computeCellSide(width, cols, gap)
   const cellHeight = computeCellSide(height, rows, gap)
   const cells = []
 
   if (cellWidth && cellHeight) {
-    for (let i = 0; i < cols; i++) {
-      for (let j = 0; j < rows; j++) {
+    for (let i = 0; i < cols; i += 1) {
+      for (let j = 0; j < rows; j += 1) {
         cells.push(
-          <div key={`${i}-${j}`} style={{
-            position: 'absolute',
-            top: j * (cellHeight+ gap),
-            left: i * (cellWidth+ gap),
-            background: color,
-            width: cellWidth,
-            height: cellHeight,
-            lineHeight: `${cellHeight}px`,
-            overflow: 'hidden',
-            textAlign: 'center'
-          }}>
+          <div
+            key={`${i}-${j}`}
+            style={{
+              position: 'absolute',
+              top: j * (cellHeight + gap),
+              left: i * (cellWidth + gap),
+              background: color,
+              width: cellWidth,
+              height: cellHeight,
+              lineHeight: `${cellHeight}px`,
+              overflow: 'hidden',
+              textAlign: 'center',
+            }}
+          >
             { children }
-          </div>
-        )
+          </div>)
       }
     }
   }
 
-  return <div style={{ textAlign: align }}>
-    <div style={{
-      position: 'relative',
-      display: 'inline-block',
-      background: 'transparent',
-      width: width,
-      height: height
-    }}>
-      { $nbsp }
-      { cells }
+  return (
+    <div style={{ textAlign: align }}>
+      <div
+        style={{
+          position: 'relative',
+          display: 'inline-block',
+          background: 'transparent',
+          width,
+          height,
+        }}
+      >
+        { $nbsp }
+        { cells }
+      </div>
     </div>
-  </div>
+  )
 }
 
 Table.propTypes = {
@@ -72,7 +78,16 @@ Table.propTypes = {
   cols: PropTypes.number,
   rows: PropTypes.number,
   gap: PropTypes.number,
-  align: PropTypes.string
+  align: PropTypes.string,
+}
+
+Table.defaultProps = {
+  width: null,
+  height: null,
+  cols: COLS,
+  rows: ROWS,
+  gap: GAP,
+  align: CENTER,
 }
 
 export default Table

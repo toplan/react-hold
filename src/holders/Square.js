@@ -4,7 +4,7 @@ import shapes from '../shapes'
 import { CENTER } from '../align'
 import { isNull } from '../utils'
 
-const Square = ({ color, width, height, children, side, align = CENTER }) => {
+const Square = ({ color, width, height, children, side, align }) => {
   if (isNull(side)) {
     if (!isNull(width) && !isNull(height)) {
       side = width > height ? height : width
@@ -18,24 +18,35 @@ const Square = ({ color, width, height, children, side, align = CENTER }) => {
     side : typeof side === 'number' ?
     `${side}px` : null
 
-  return <div style={{ textAlign: align }}>
-    <div style={{
-      display: 'inline-block',
-      background: color,
-      width: side,
-      height: side,
-      textAlign: 'center',
-      lineHeight
-    }}>
-      { children }
+  return (
+    <div style={{ textAlign: align }}>
+      <div
+        style={{
+          display: 'inline-block',
+          textAlign: 'center',
+          background: color,
+          width: side,
+          height: side,
+          lineHeight,
+        }}
+      >
+        { children }
+      </div>
     </div>
-  </div>
+  )
 }
 
 Square.propTypes = {
   ...shapes,
   side: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  align: PropTypes.string
+  align: PropTypes.string,
+}
+
+Square.defaultProps = {
+  width: null,
+  height: null,
+  side: null,
+  align: CENTER,
 }
 
 export default Square

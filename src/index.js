@@ -3,6 +3,7 @@ import holdable from './Decorator'
 import holders from './holders/index'
 import shapes from './shapes'
 import align from './align'
+
 const $nbsp = '\u00A0'
 
 hold.holdable = holdable
@@ -18,5 +19,5 @@ export {
   holders,
   shapes,
   align,
-  $nbsp
+  $nbsp,
 }

@@ -9,7 +9,7 @@ import hold from './hold'
  * @returns {Function}
  */
 export default function (condition, holder, holderProps) {
-  return function (WrappedComponent) {
+  return function wrap(WrappedComponent) {
     return hold(WrappedComponent, condition, holder, holderProps)
   }
 }

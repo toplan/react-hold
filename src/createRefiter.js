@@ -1,4 +1,4 @@
-import { isNull, isFunction, hasOwnProperty } from './utils'
+import { isNull, isFunction } from './utils'
 
 export const symbol = Symbol ? Symbol('react-hold/refiter') : '$$react-hold/refiter'
 
@@ -14,7 +14,8 @@ export default function (component) {
   let componentOriginalMethods = null
 
   const replaceLifecycleMethods = () => {
-    let componentDidMount, componentWillUnmount
+    let componentDidMount
+    let componentWillUnmount
     const prototype = component.prototype
     if (isNull(componentOriginalMethods) && prototype) {
       if (isFunction(prototype.componentDidMount)) {
@@ -23,15 +24,17 @@ export default function (component) {
       }
       if (isFunction(prototype.componentWillUnmount)) {
         componentWillUnmount = prototype.componentWillUnmount
-        prototype.componentWillUnmount = function () {
+        prototype.componentWillUnmount = function willUnmount() {
           try {
             componentWillUnmount.call(this)
-          } catch (e) {}
+          } catch (e) {
+            // swallow exception
+          }
         }
       }
       componentOriginalMethods = {
         componentDidMount,
-        componentWillUnmount
+        componentWillUnmount,
       }
     }
   }
@@ -39,18 +42,18 @@ export default function (component) {
   const restoreLifecycleMethods = () => {
     const methods = componentOriginalMethods
     if (!isNull(methods) && component.prototype) {
-      for (let name in methods) {
-        if (hasOwnProperty(methods, name) && isFunction(methods[name])) {
+      Object.keys(methods).forEach((name) => {
+        if (isFunction(methods[name])) {
           component.prototype[name] = methods[name]
         }
-      }
+      })
       componentOriginalMethods = null
     }
   }
 
   const refiter = {
     refit: replaceLifecycleMethods,
-    undo: restoreLifecycleMethods
+    undo: restoreLifecycleMethods,
   }
 
   if (typeof component !== 'string') {

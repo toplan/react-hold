@@ -7,5 +7,5 @@ export const RIGHT = 'right'
 export default {
   LEFT,
   CENTER,
-  RIGHT
+  RIGHT,
 }
