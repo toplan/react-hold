@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
+import PropTypes from 'prop-types'
 import {
   isNull, isObject, isFunction,
   getNodeSize, getComputedStyle, getComponentName,
@@ -207,6 +208,14 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
   }
 
   Hold.displayName = `Hold(${wrappedComponentName})`
+
+  Hold.propTypes = {
+    innerRef: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  }
+
+  Hold.defaultProps = {
+    innerRef: null,
+  }
 
   return Hold
 }
