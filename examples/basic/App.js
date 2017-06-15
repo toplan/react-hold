@@ -1,10 +1,9 @@
+import './style.css'
 import React, { Component } from 'react'
 import hold, { holdable, holders, align } from 'react-hold'
-import logo from '../logo.svg';
-import './style.css'
-
 import Title from '$components/Title'
-import Desc from '$components/Desc'
+import Div from '$components/Div'
+import logo from '../logo.svg';
 
 class App extends Component {
   constructor(...args) {
@@ -14,24 +13,25 @@ class App extends Component {
       title: '',
       className: null,
       height: null,
-      src: null
+      src: null,
     }
   }
 
   componentDidMount() {
     setTimeout(() => {
-      this.setState({
-        className: 'change-style-to',
-        height: 50,
-        src: logo
-      })
-    }, 1500)
+      if (confirm('Can I update the states?')) {
+        this.setState({
+          className: 'change-style-to',
+          height: 50,
+          src: logo,
+        })
+      }
+    }, 2000)
   }
 
   changeTile = (e) => {
-    const title = e.target.value
     this.setState({
-      title
+      title: e.target.value
     })
   }
 
@@ -40,7 +40,7 @@ class App extends Component {
       <div className="container">
 
         <section>
-          <input type="text" value={ this.state.title } onChange={ this.changeTile }/>
+          <input type="text" value={this.state.title} onChange={this.changeTile}/>
         </section>
 
         <h3>Fill</h3>
@@ -49,32 +49,40 @@ class App extends Component {
         </section>
 
         <section>
-          <Title className={ this.state.className }>{ this.state.title }</Title>
+          <Title className={this.state.className}>
+            { this.state.title }
+          </Title>
         </section>
 
         <section>
-          <Desc>{ this.state.title }</Desc>
+          <Div>
+            { this.state.title }
+          </Div>
         </section>
 
         <h3>Square</h3>
-        <section style={{ textAlign: 'center' }}>
-          <Img src={ this.state.src } width={ 90 } height={ 90 }/>
+        <section style={{textAlign: 'center'}}>
+          <Img src={this.state.src} width={90} height={90}/>
         </section>
 
         <h3>Circle</h3>
-        <section style={{ position: 'relative' }}>
-          <InnerCircle height={ this.state.height }/>
+        <section>
+          <InnerCircle height={this.state.height}/>
         </section>
 
         <h3>Text</h3>
         <section>
-          <Text>{ this.state.title }</Text>
-          <P style={{ padding: '5px 0' }}>{ this.state.title }</P>
+          <Text>
+            { this.state.title }
+          </Text>
+          <P style={{padding: '5px 0'}}>
+            { this.state.title }
+          </P>
         </section>
 
         <h3>Table</h3>
         <section>
-          <Table height={ 80 }/>
+          <Table height={80}/>
         </section>
 
       </div>
@@ -112,9 +120,11 @@ const Text = holdable(
   (props) => !props.children,
   holders.Text
 )(({ children }) => {
-  return <p>
-    { children }
-  </p>
+  return (
+    <p style={{textIndent: 30}}>
+      { children }
+    </p>
+  )
 })
 
 const P = hold(

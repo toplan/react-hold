@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom'
 import {
   isNull, isObject, isFunction,
   getNodeSize, getComputedStyle, getComponentName,
-  addHandler, removeHandler, warn,
+  addHandler, removeHandler,
 } from './utils'
 import Fill from './holders/Fill'
 import createRefiter from './createRefiter'
@@ -140,30 +140,15 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
       let result = null
       const originNode = findDOMNode(this)
 
-      // compute original 'display' and 'position' property
+      // store original display property
       let computedStyle = getComputedStyle(originNode, null)
       const originDisplay = computedStyle.getPropertyValue('display')
-      const position = computedStyle.getPropertyValue('position')
 
-      // if position is 'absolute' or 'fixed',
-      // check the width and height of original node,
-      // otherwise recompute the style of original node.
-      if (position === 'absolute' || position === 'fixed') {
-        const width = computedStyle.getPropertyValue('width')
-        const height = computedStyle.getPropertyValue('height')
-        if (height === '0px' && isNull(holderProps.height)) {
-          warn(`The holder(${getComponentName(holder)}) of component(${wrappedComponentName}) expected the height props.`)
-        }
-        if (width === '0px' && isNull(holderProps.width)) {
-          warn(`The holder(${getComponentName(holder)}) of component(${wrappedComponentName}) expected the width props.`)
-        }
-      } else {
-        // set display to 'none' before recompute is very **important**,
-        // don't remove or move this step!
-        originNode.style.display = 'none'
-        // compute node style
-        computedStyle = getComputedStyle(originNode, null)
-      }
+      // set display to 'none' before recompute is very **important**,
+      // don't remove or move this step!
+      originNode.style.display = 'none'
+      // compute node style
+      computedStyle = getComputedStyle(originNode, null)
 
       Object.keys(computedStyle).forEach((key) => {
         if (/[0-9]+/.test(key)) {
@@ -198,19 +183,23 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
 
     render() {
       const { hold, copy, color, width, height } = this.state
+
       if (!hold || copy) {
-        return React.createElement(targetComponent, this.props)
+        const { innerRef, ...propsForElement } = this.props
+        if (innerRef && !hold) propsForElement.ref = innerRef
+        return React.createElement(targetComponent, propsForElement)
       }
-      const props = { ...holderProps, color, width, height }
-      if (typeof props.children === 'string') {
-        props.children = props.children.trim()
+
+      const propsForHolder = { ...holderProps, color, width, height }
+      if (typeof propsForHolder.children === 'string') {
+        propsForHolder.children = propsForHolder.children.replace(/ /g, $nbsp)
       }
-      props.children = props.children || $nbsp
+      propsForHolder.children = propsForHolder.children || $nbsp.repeat(4)
 
       return (
         <div ref="fake">
           <div ref="env" style={envStyle}>
-            { React.createElement(holder, props) }
+            { React.createElement(holder, propsForHolder) }
           </div>
         </div>
       )

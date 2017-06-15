@@ -1,4 +1,4 @@
-import hold from './hold'
+import hold from './HOC'
 
 /**
  * The decorator make component holdable.

@@ -1,4 +1,4 @@
-import hold from './hold'
+import hold from './HOC'
 import holdable from './Decorator'
 import holders from './holders/index'
 import shapes from './shapes'

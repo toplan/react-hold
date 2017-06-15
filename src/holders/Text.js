@@ -1,15 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import shapes from '../shapes'
 import { LEFT } from '../align'
 
 const $nbsp = '\u00A0'
 
-const Text = ({ color, length, align, indent, lineHeight, fontSize }) => (
+const Text = ({ color, width, height, length, align, lineHeight, fontSize }) => (
   <div
     style={{
       background: 'transparent',
+      overflow: 'hidden',
       textAlign: align,
-      textIndent: indent,
+      width,
+      height,
       lineHeight,
       fontSize,
     }}
@@ -27,18 +30,18 @@ const Text = ({ color, length, align, indent, lineHeight, fontSize }) => (
 )
 
 Text.propTypes = {
-  color: PropTypes.string.isRequired,
+  ...shapes,
   length: PropTypes.number,
   align: PropTypes.string,
-  indent: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   lineHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 Text.defaultProps = {
+  width: null,
+  height: null,
   length: 100,
   align: LEFT,
-  indent: 30,
   lineHeight: 1.7,
   fontSize: null,
 }
