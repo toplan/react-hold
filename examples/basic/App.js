@@ -1,8 +1,9 @@
 import './style.css'
 import React, { Component } from 'react'
-import hold, { holdable, holders, align } from 'react-hold'
-import Title from '$components/Title'
+import hold, { holders, align } from 'react-hold'
 import Div from '$components/Div'
+import H from '$components/H'
+import P from '$components/P'
 import logo from '../logo.svg';
 
 class App extends Component {
@@ -49,9 +50,9 @@ class App extends Component {
         </section>
 
         <section>
-          <Title className={this.state.className}>
+          <H className={this.state.className}>
             { this.state.title }
-          </Title>
+          </H>
         </section>
 
         <section>
@@ -72,12 +73,12 @@ class App extends Component {
 
         <h3>Text</h3>
         <section>
-          <Text>
+          <Text1 style={{textIndent: 30, fontSize: 20}}>
             { this.state.title }
-          </Text>
-          <P style={{padding: '5px 0'}}>
+          </Text1>
+          <Text2 style={{padding: '5px 0'}}>
             { this.state.title }
-          </P>
+          </Text2>
         </section>
 
         <h3>Table</h3>
@@ -99,42 +100,26 @@ const Circle = hold(
   () => true
 )
 
-const Img = holdable(
+const Img = hold(
+  ({ src, width, height }) => (
+    <img src={ src } style={{ width, height }}/>
+  ),
   (props) => !props.src,
   holders.Square,
   {
     children: 'loading...'
   }
-)(({ src, width, height }) => {
-  return <img src={ src } style={{ width, height }}/>
-})
+)
 
-const InnerCircle = holdable(
+const InnerCircle = hold(
+  ({ height }) => (<div style={{ height }}></div>),
   (props) => true,
   holders.Circle
-)(({ height }) => {
-  return <div style={{ height }}></div>
-})
-
-const Text = holdable(
-  (props) => !props.children,
-  holders.Text
-)(({ children }) => {
-  return (
-    <p style={{textIndent: 30}}>
-      { children }
-    </p>
-  )
-})
-
-const P = hold(
-  'p',
-  (props) => !props.children,
-  holders.Text,
-  {
-    length: 300
-  }
 )
+
+const Text1 = P.withHolder(holders.Text)
+
+const Text2 = P.withHolder(holders.Text, { length: 300 })
 
 const Table = hold(
   ({ height }) => <div style={{ height }}></div>,

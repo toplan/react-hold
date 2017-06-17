@@ -17,7 +17,7 @@ export const getNodeSize = (node) => {
   }
 }
 
-export const getComponentName = (component) => {
+export const getDisplayName = (component) => {
   if (isNull(component)) return null
   return component.displayName
     || component.name
@@ -41,9 +41,7 @@ export const removeHandler = window.removeEventListener ?
   }
 
 export const warn = (msg) => {
-  if (isNull(msg)) {
-    return
-  }
+  if (isNull(msg)) return
   if (process.env.NODE_ENV !== 'production') {
     throw new Error(msg)
   } else if (console) {

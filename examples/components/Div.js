@@ -5,8 +5,10 @@ import hold from 'react-hold'
 
 const holdCondition = (props, prevProps) => !props.children
 
-export const withHolderProps = (props = {}) => hold('div', holdCondition, props)
+const withHolder = (holder, props) => hold('div', holdCondition, holder, props)
 
-const Div = withHolderProps()
+const Div = withHolder()
+
+Div.withHolder = withHolder
 
 export default Div

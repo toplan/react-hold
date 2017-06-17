@@ -8,6 +8,7 @@ const COLS = 2
 const ROWS = 2
 const GAP = 2
 const $nbsp = '\u00A0'
+const blankLength = 10
 
 const computeCellSide = (total, number, gap) => {
   if (total <= 0) return 0
@@ -66,7 +67,7 @@ const Table = ({ color, width, height, children, cols, rows, gap, align }) => {
           height,
         }}
       >
-        { $nbsp }
+        { $nbsp.repeat(blankLength) }
         { cells }
       </div>
     </div>

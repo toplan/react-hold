@@ -3,16 +3,15 @@ import { findDOMNode } from 'react-dom'
 import PropTypes from 'prop-types'
 import {
   isNull, isObject, isFunction,
-  getNodeSize, getComputedStyle, getComponentName,
+  getNodeSize, getComputedStyle, getDisplayName,
   addHandler, removeHandler,
 } from './utils'
 import Fill from './holders/Fill'
 import createRefiter from './createRefiter'
 
 const $nbsp = '\u00A0'
-
+const blankLenght = 8
 const window = global
-
 const envStyle = {
   position: 'relative',
   padding: '0px',
@@ -51,7 +50,7 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
   holderProps.width = !isNull(holderProps.width) ? holderProps.width : null
   holderProps.height = !isNull(holderProps.height) ? holderProps.height : null
 
-  const wrappedComponentName = getComponentName(targetComponent)
+  const wrappedComponentName = getDisplayName(targetComponent)
 
   const refiter = createRefiter(targetComponent)
 
@@ -174,12 +173,17 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
     updateHolderSizeIfNecessary() {
       const { env } = this.refs
       if (!env) return
+      if (!isNull(holderProps.width) && !isNull(holderProps.height)) return
 
       const size = getNodeSize(env)
-      this.setState({
-        width: isNull(holderProps.width) ? size.width : holderProps.width,
-        height: isNull(holderProps.height) ? size.height : holderProps.height,
-      })
+      const width = isNull(holderProps.width) ? size.width : holderProps.width
+      const height = isNull(holderProps.height) ? size.height : holderProps.height
+      if (this.state.width !== width || this.state.height !== height) {
+        this.setState({
+          width,
+          height,
+        })
+      }
     }
 
     render() {
@@ -195,7 +199,7 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
       if (typeof propsForHolder.children === 'string') {
         propsForHolder.children = propsForHolder.children.replace(/ /g, $nbsp)
       }
-      propsForHolder.children = propsForHolder.children || $nbsp.repeat(4)
+      propsForHolder.children = propsForHolder.children || $nbsp.repeat(blankLenght)
 
       return (
         <div ref="fake">

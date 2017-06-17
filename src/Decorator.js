@@ -1,4 +1,4 @@
-import hold from './HoC'
+import Hoc from './HoC'
 
 /**
  * The decorator make component holdable.
@@ -10,6 +10,6 @@ import hold from './HoC'
  */
 export default function (condition, holder, holderProps) {
   return function wrap(WrappedComponent) {
-    return hold(WrappedComponent, condition, holder, holderProps)
+    return Hoc(WrappedComponent, condition, holder, holderProps)
   }
 }

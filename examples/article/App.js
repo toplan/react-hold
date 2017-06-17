@@ -1,10 +1,8 @@
 import './style.css'
 import React, { Component } from 'react'
 import hold, { holdable, holders, align } from 'react-hold'
-import { withHolderProps } from '$components/Title'
 import Div from '$components/Div'
-
-const Title = withHolderProps({ width: '40%' })
+import H from '$components/H'
 
 class App extends Component {
   constructor(...args) {
@@ -27,3 +25,5 @@ class App extends Component {
 }
 
 export default App
+
+const Title = H.withHolder({ width: '40%' })

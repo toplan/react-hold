@@ -2,24 +2,29 @@
  * Created by toplan on 17/6/9.
  */
 import React from 'react'
-import { holdable } from 'react-hold'
+import { holdable } from 'react-hold' //try use decorator
 
-const Title = ({ size, className, children }) => {
+const H = ({ size, className, style, children }) => {
   size = Math.ceil(size)
   if (size < 1) size = 1
   if (size > 6) size = 6
   return React.createElement(`h${size}`, {
     className,
+    style,
     children,
   })
 }
 
-Title.defaultProps = {
+H.defaultProps = {
   size: 1,
 }
 
 const holdCondition = (props, prevProps) => !props.children
 
-export const withHolderProps = (props = {}) => holdable(holdCondition, props)(Title)
+const withHolder = (holder, props = {}) => holdable(holdCondition, holder, props)(H)
 
-export default withHolderProps()
+const H1 = withHolder()
+
+H1.withHolder = withHolder
+
+export default H1
