@@ -1,24 +1,46 @@
 import './style.css'
 import React, { Component } from 'react'
 import hold, { holdable, holders, align } from 'react-hold'
-import Div from '$components/Div'
-import H from '$components/H'
+import { Div, H, Img, Span } from '$components'
+import avatar from '../_img/github-toplan.png';
 
 class App extends Component {
   constructor(...args) {
     super(...args)
 
     this.state = {
-      title: ''
+      title: '',
+      author: {
+        avatar: null,
+        name: '',
+      }
     }
   }
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        author: {
+          avatar,
+          name: 'toplan',
+        }
+      })
+    }, 3000)
+  }
+
   render() {
+    const state = this.state
     return (
       <div className="container">
-        <Title>
-          { this.state.title }
-        </Title>
+        <h.Title>
+          { state.title }
+        </h.Title>
+        <div className="author-info">
+          <Img className="author-info_avatar" src={state.author.avatar}/>
+          <Span className="author-info_name">
+            { state.author.name }
+          </Span>
+        </div>
       </div>
     )
   }
@@ -26,4 +48,10 @@ class App extends Component {
 
 export default App
 
-const Title = H.withHolder({ width: '40%' })
+/*
+ * The holdable presentational components:
+ */
+
+const h = {
+  Title: H.withHolder({ width: '60%' })
+}

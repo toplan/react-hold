@@ -27,7 +27,7 @@ class App extends Component {
           src: logo,
         })
       }
-    }, 2000)
+    }, 4000)
   }
 
   changeTile = (e) => {
@@ -68,22 +68,22 @@ class App extends Component {
 
         <h3>Circle</h3>
         <section>
-          <InnerCircle height={this.state.height}/>
+          <div.InnerCircle style={{height:this.state.height, minHeight: 40}}/>
         </section>
 
         <h3>Text</h3>
         <section>
-          <Text1 style={{textIndent: 30, fontSize: 20}}>
+          <p.Text style={{textIndent: 30, fontSize: 20}}>
             { this.state.title }
-          </Text1>
-          <Text2 style={{padding: '5px 0'}}>
+          </p.Text>
+          <p.TextLen300 style={{padding: '5px 0'}}>
             { this.state.title }
-          </Text2>
+          </p.TextLen300>
         </section>
 
         <h3>Table</h3>
         <section>
-          <Table height={80}/>
+          <div.Table4x2 style={{height:80}}/>
         </section>
 
       </div>
@@ -93,40 +93,36 @@ class App extends Component {
 
 export default App
 
-// holdable presentational components:
+
+/*
+ * The holdable presentational components:
+ */
 
 const Circle = hold(
-  () => <div className="circle"></div>,
-  () => true
+  () => <div className="circle"></div>, // functional component
+  () => true // forever hold
 )
 
 const Img = hold(
   ({ src, width, height }) => (
     <img src={ src } style={{ width, height }}/>
-  ),
-  (props) => !props.src,
-  holders.Square,
+  ), // functional component
+  (props) => !props.src, // hold if 'src' is null
+  holders.Square, // holder
   {
     children: 'loading...'
-  }
+  } // holder props
 )
 
-const InnerCircle = hold(
-  ({ height }) => (<div style={{ height }}></div>),
-  (props) => true,
-  holders.Circle
-)
+const p = {
+  Text: P.withHolder(holders.Text),
+  TextLen300: P.withHolder(holders.Text, { length: 300 }),
+}
 
-const Text1 = P.withHolder(holders.Text)
-
-const Text2 = P.withHolder(holders.Text, { length: 300 })
-
-const Table = hold(
-  ({ height }) => <div style={{ height }}></div>,
-  () => true,
-  holders.Table,
-  {
-    width: 300,
-    cols: 3
-  }
-)
+const div = {
+  InnerCircle: Div.withHolder(holders.Circle),
+  Table4x2: Div.withHolder(holders.Table, {
+    cols: 4,
+    rows: 2,
+  })
+}

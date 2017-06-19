@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import PropTypes from 'prop-types'
+import hoistNonReactStatic from 'hoist-non-react-statics'
 import {
   isNull, isObject, isFunction,
   getNodeSize, getComputedStyle, getDisplayName,
@@ -10,7 +11,7 @@ import Fill from './holders/Fill'
 import createRefiter from './createRefiter'
 
 const $nbsp = '\u00A0'
-const blankLenght = 8
+const blankLength = 8
 const window = global
 const envStyle = {
   position: 'relative',
@@ -68,11 +69,16 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
       }
       // The style value of original node
       this.originNodeStyle = null
-      this.resizeHandler = this.updateHolderSizeIfNecessary.bind(this)
+      // window resize handler
+      this.resizeHandler = () => {
+        if (this.state.hold) {
+          this.updateHolderSizeIfNecessary()
+        }
+      }
     }
 
     componentWillMount() {
-      if (condition.call(null, this.props)) {
+      if (condition.call(null, this.props, {})) {
         refiter.refit()
       } else {
         this.cancelHold()
@@ -80,14 +86,16 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
     }
 
     componentDidMount() {
-      this.originNodeStyle = this.computeOriginNodeStyle()
-      this.setState({ copy: false })
+      if (this.state.hold) {
+        this.originNodeStyle = this.computeOriginNodeStyle()
+        this.setState({ copy: false })
+      }
 
       addHandler(window, 'resize', this.resizeHandler)
     }
 
     componentWillReceiveProps(nextProps) {
-      if (condition.call(null, nextProps)) {
+      if (condition.call(null, nextProps, this.props)) {
         this.setState({
           hold: true,
           copy: true,
@@ -131,9 +139,7 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
       fake.style.opacity = 1
       fake.style.background = 'transparent'
       fake.style.borderColor = 'transparent'
-      let display = style.display
-      if (display === 'inline') display = 'inline-block'
-      fake.style.display = display
+      fake.style.display = style.display === 'inline' ? 'inline-block' : style.display
     }
 
     computeOriginNodeStyle() {
@@ -161,6 +167,11 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
           }
         }
       })
+
+      // if node is img, set overflow to 'hidden'
+      if (originNode.tagName === 'IMG') {
+        result.overflow = 'hidden'
+      }
 
       return result
     }
@@ -199,7 +210,7 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
       if (typeof propsForHolder.children === 'string') {
         propsForHolder.children = propsForHolder.children.replace(/ /g, $nbsp)
       }
-      propsForHolder.children = propsForHolder.children || $nbsp.repeat(blankLenght)
+      propsForHolder.children = propsForHolder.children || $nbsp.repeat(blankLength)
 
       return (
         <div ref="fake">
@@ -210,6 +221,8 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
       )
     }
   }
+
+  hoistNonReactStatic(Hold, targetComponent)
 
   Hold.displayName = `Hold(${wrappedComponentName})`
 

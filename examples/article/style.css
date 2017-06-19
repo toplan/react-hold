@@ -1,5 +1,22 @@
 .container {
     position: relative;
-    padding: 0 15px;
     margin: 60px 10%;
+    padding: 0;
 }
+
+.author-info {
+    text-align: center;
+
+    .author-info_avatar {
+        width: 26px;
+        height: 26px;
+        border-radius: 13px;
+    }
+
+    .author-info_name {
+        position: relative;
+        top: -7px;
+        margin-left: 12px;
+    }
+}
+
