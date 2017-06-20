@@ -1,10 +1,8 @@
 import './style.css'
 import React, { Component } from 'react'
 import hold, { holders, align } from 'react-hold'
-import Div from '$components/Div'
-import H from '$components/H'
-import P from '$components/P'
-import logo from '../logo.svg';
+import { Div, H, Img, P } from '$components'
+import logo from '../_img/github-toplan.png';
 
 class App extends Component {
   constructor(...args) {
@@ -46,7 +44,7 @@ class App extends Component {
 
         <h3>Fill</h3>
         <section>
-          <Circle/>
+          <Div className="circle"></Div>
         </section>
 
         <section>
@@ -63,7 +61,7 @@ class App extends Component {
 
         <h3>Square</h3>
         <section style={{textAlign: 'center'}}>
-          <Img src={this.state.src} width={90} height={90}/>
+          <img.Square src={this.state.src} width={80} height={80}/>
         </section>
 
         <h3>Circle</h3>
@@ -97,22 +95,9 @@ export default App
 /*
  * The holdable presentational components:
  */
-
-const Circle = hold(
-  () => <div className="circle"></div>, // functional component
-  () => true // forever hold
-)
-
-const Img = hold(
-  ({ src, width, height }) => (
-    <img src={ src } style={{ width, height }}/>
-  ), // functional component
-  (props) => !props.src, // hold if 'src' is null
-  holders.Square, // holder
-  {
-    children: 'loading...'
-  } // holder props
-)
+const img = {
+  Square: Img.withHolder(holders.Square, { children: 'loading...' }),
+}
 
 const p = {
   Text: P.withHolder(holders.Text),

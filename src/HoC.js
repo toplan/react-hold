@@ -5,7 +5,7 @@ import hoistNonReactStatic from 'hoist-non-react-statics'
 import {
   isNull, isObject, isFunction,
   getNodeSize, getComputedStyle, getDisplayName,
-  addHandler, removeHandler,
+  addHandler, removeHandler, warn,
 } from './utils'
 import Fill from './holders/Fill'
 import createRefiter from './createRefiter'
@@ -51,12 +51,11 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
   holderProps.width = !isNull(holderProps.width) ? holderProps.width : null
   holderProps.height = !isNull(holderProps.height) ? holderProps.height : null
 
-  const wrappedComponentName = getDisplayName(targetComponent)
+  const targetComponentName = getDisplayName(targetComponent)
 
   const refiter = createRefiter(targetComponent)
 
   class Hold extends Component {
-
     constructor(...args) {
       super(...args)
 
@@ -155,7 +154,7 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
       originNode.style.display = 'none'
       // compute node style
       computedStyle = getComputedStyle(originNode, null)
-
+      // copy style
       Object.keys(computedStyle).forEach((key) => {
         if (/[0-9]+/.test(key)) {
           const name = computedStyle[key]
@@ -167,10 +166,12 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
           }
         }
       })
-
-      // if node is img, set overflow to 'hidden'
+      // if node name is 'IMG', set overflow to 'hidden'
       if (originNode.tagName === 'IMG') {
         result.overflow = 'hidden'
+        if (!isNull(holderProps.width) || !isNull(holderProps.height)) {
+          warn(`Not support set width or height props to the holder which in component '${targetComponentName}'.`)
+        }
       }
 
       return result
@@ -224,7 +225,7 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
 
   hoistNonReactStatic(Hold, targetComponent)
 
-  Hold.displayName = `Hold(${wrappedComponentName})`
+  Hold.displayName = `Hold(${targetComponentName})`
 
   Hold.propTypes = {
     innerRef: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
