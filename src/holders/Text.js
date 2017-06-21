@@ -42,8 +42,8 @@ Text.defaultProps = {
   height: null,
   length: 100,
   align: LEFT,
-  lineHeight: 1.7,
-  fontSize: null,
+  lineHeight: 2.3,
+  fontSize: '0.7em',
 }
 
 export default Text

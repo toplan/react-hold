@@ -5,10 +5,6 @@ import hold from 'react-hold'
 
 const holdCondition = (props, prevProps) => !props.children
 
-const withHolder = (holder, props) => hold('p', holdCondition, holder, props)
-
-const P = withHolder()
-
-P.withHolder = withHolder
+const P = hold('p', holdCondition)
 
 export default P

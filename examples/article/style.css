@@ -1,32 +1,40 @@
 .container {
     position: relative;
-    margin: 60px 10%;
+    margin: 60px auto;
     padding: 0;
+    width: 800px;
 }
 
 .article-title {
     text-align: center;
 }
-
+a {
+}
 .author-info {
     text-align: center;
     margin-bottom: 45px;
+    height: 26px;
+    line-height: 26px;
+    vertical-align: middle;
+
+    >div {
+        display: inline-block;
+    }
 
     .author-info_avatar {
         width: 26px;
         height: 26px;
         border-radius: 13px;
+        float: left;
     }
 
     .author-info_name {
-        position: relative;
-        top: -7px;
         margin-left: 12px;
     }
 }
 
 .article-content {
-    font-size: 20px;
+    font-size: 22px;
 
     .article-content_p {
         text-indent: 30px;

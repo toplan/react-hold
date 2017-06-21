@@ -35,28 +35,30 @@ class App extends Component {
           'Another way of thinking about HOCs is that they let you generate code automatically. You might be familiar with this concept from other languages. For example, Ruby programmers often call it metaprogramming.',
         ]
       })
-    }, 3000)
+    }, 1000)
   }
 
   render() {
     const state = this.state
     return (
       <div className="container">
-        <h.Title className="article-title">
+        <H props={{width: '60%'}} className="article-title">
           { state.title }
-        </h.Title>
+        </H>
         <div className="author-info">
-          <Img className="author-info_avatar" src={state.author.avatar}/>
-          <Span className="author-info_name">
-            { state.author.name }
-          </Span>
+          <div>
+            <Img holder={holders.Circle} className="author-info_avatar" src={state.author.avatar}/>
+            <Span className="author-info_name">
+              { state.author.name }
+            </Span>
+          </div>
         </div>
         <div className="article-content">
           {state.content.map((chunk, index) => {
             if (!index || index === state.content.length - 1) {
-              return <p.TextMin key={index} className="article-content_p">{ chunk }</p.TextMin>
+              return <P holder={holders.Text} props={{length: 220}} key={index} className="article-content_p">{ chunk }</P>
             }
-            return <p.TextMax key={index} className="article-content_p">{ chunk }</p.TextMax>
+            return <P holder={holders.Text} props={{length: 320}} key={index} className="article-content_p">{ chunk }</P>
           })}
         </div>
       </div>
@@ -65,22 +67,3 @@ class App extends Component {
 }
 
 export default App
-
-/*
- * The holdable presentational components:
- */
-
-const h = {
-  Title: H.withHolder({ width: '60%' })
-}
-
-const p = {
-  TextMin: P.withHolder(holders.Text, {
-    length: 220,
-    fontSize: 16,
-  }),
-  TextMax: P.withHolder(holders.Text, {
-    length: 300,
-    fontSize: 16,
-  }),
-}

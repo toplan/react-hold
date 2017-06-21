@@ -21,6 +21,4 @@ H.defaultProps = {
 
 const holdCondition = (props, prevProps) => !props.children
 
-H.withHolder = (holder, props = {}) => holdable(holdCondition, holder, props)(H)
-
-export default H.withHolder()
+export default holdable(holdCondition)(H)

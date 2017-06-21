@@ -5,10 +5,6 @@ import hold from 'react-hold'
 
 const holdCondition = (props, prevProps) => !props.src
 
-const withHolder = (holder, props) => hold('img', holdCondition, holder, props)
-
-const Img = withHolder()
-
-Img.withHolder = withHolder
+const Img = hold('img', holdCondition)
 
 export default Img

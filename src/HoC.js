@@ -5,15 +5,15 @@ import hoistNonReactStatic from 'hoist-non-react-statics'
 import {
   isNull, isObject, isFunction,
   getNodeSize, getComputedStyle, getDisplayName,
-  addHandler, removeHandler, warn,
+  addHandler, removeHandler,
 } from './utils'
 import Fill from './holders/Fill'
 import createRefiter from './createRefiter'
 
 const $nbsp = '\u00A0'
-const blankLength = 8
+const blankLength = 10
 const window = global
-const envStyle = {
+const envDefaultStyle = {
   position: 'relative',
   padding: '0px',
   margin: '0px',
@@ -29,11 +29,12 @@ const envStyle = {
  *
  * @param {Component} targetComponent
  * @param {Function} condition
- * @param {Component} holder
- * @param {Object} holderProps
+ * @param {Component} defaultHolder
+ * @param {Object} holderDefaultProps
  * @returns {Component}
  */
-export default function (targetComponent, condition, holder = Fill, holderProps = {}) {
+export default function (targetComponent, condition,
+  defaultHolder = Fill, holderDefaultProps = {}) {
   if (!isFunction(targetComponent) && typeof targetComponent !== 'string') {
     throw new TypeError('Expected the target component to be a react or dom component.')
   }
@@ -42,14 +43,10 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
     throw new TypeError('Expected the hold condition to be a function.')
   }
 
-  if (isObject(holder)) {
-    holderProps = holder
-    holder = Fill
+  if (isObject(defaultHolder)) {
+    holderDefaultProps = defaultHolder
+    defaultHolder = Fill
   }
-
-  holderProps.color = holderProps.color || '#eee'
-  holderProps.width = !isNull(holderProps.width) ? holderProps.width : null
-  holderProps.height = !isNull(holderProps.height) ? holderProps.height : null
 
   const targetComponentName = getDisplayName(targetComponent)
 
@@ -62,11 +59,12 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
       this.state = {
         hold: true,
         copy: true,
-        color: holderProps.color, // holder's color
-        width: holderProps.width, // holder's width
-        height: holderProps.height, // holder's height
+        holderAutoSize: {
+          width: null,
+          height: null,
+        },
       }
-      // The style value of original node
+      // The style of original node
       this.originNodeStyle = null
       // window resize handler
       this.resizeHandler = () => {
@@ -125,7 +123,9 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
     setFakeNodeStyle(style) {
       if (!isObject(style)) return
 
-      const fake = this.refs.fake
+      const { fake, env } = this.refs
+      const isInline = style.display && style.display.indexOf('inline') > -1
+
       // hidden element
       fake.style.display = 'none'
       // set style
@@ -134,11 +134,18 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
           fake.style[name] = style[name]
         }
       })
-      // fix style
+      // fix fake style
       fake.style.opacity = 1
       fake.style.background = 'transparent'
       fake.style.borderColor = 'transparent'
-      fake.style.display = style.display === 'inline' ? 'inline-block' : style.display
+      // fix env style
+      if (isInline) {
+        env.style.overflow = 'hidden'
+      } else {
+        env.style.overflow = 'visible'
+      }
+      // display fake
+      fake.style.display = isInline ? 'inline-block' : style.display
     }
 
     computeOriginNodeStyle() {
@@ -166,13 +173,6 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
           }
         }
       })
-      // if node name is 'IMG', set overflow to 'hidden'
-      if (originNode.tagName === 'IMG') {
-        result.overflow = 'hidden'
-        if (!isNull(holderProps.width) || !isNull(holderProps.height)) {
-          warn(`Not support set width or height props to the holder which in component '${targetComponentName}'.`)
-        }
-      }
 
       return result
     }
@@ -185,29 +185,46 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
     updateHolderSizeIfNecessary() {
       const { env } = this.refs
       if (!env) return
-      if (!isNull(holderProps.width) && !isNull(holderProps.height)) return
+
+      const { holderAutoSize } = this.state
+      const holderProps = this.props.holderProps || this.props.props || {}
+      const customWidth = isNull(holderDefaultProps.width) ?
+        holderProps.width : holderDefaultProps.width
+      const customHeight = isNull(holderDefaultProps.height) ?
+        holderProps.height : holderDefaultProps.height
+      if (!isNull(customWidth) && !isNull(customHeight)) return
 
       const size = getNodeSize(env)
-      const width = isNull(holderProps.width) ? size.width : holderProps.width
-      const height = isNull(holderProps.height) ? size.height : holderProps.height
-      if (this.state.width !== width || this.state.height !== height) {
+      const width = isNull(customWidth) ? size.width : customWidth
+      const height = isNull(customHeight) ? size.height : customHeight
+      if (holderAutoSize.width !== width || holderAutoSize.height !== height) {
         this.setState({
-          width,
-          height,
+          holderAutoSize: {
+            width,
+            height,
+          },
         })
       }
     }
 
     render() {
-      const { hold, copy, color, width, height } = this.state
+      const { hold, copy, holderAutoSize } = this.state
+      const { innerRef, holder, holderProps, props, ...propsForElement } = this.props
 
       if (!hold || copy) {
-        const { innerRef, ...propsForElement } = this.props
         if (innerRef && !hold) propsForElement.ref = innerRef
         return React.createElement(targetComponent, propsForElement)
       }
 
-      const propsForHolder = { ...holderProps, color, width, height }
+      const propsForHolder = {
+        color: '#eee',
+        width: null,
+        height: null,
+        ...holderDefaultProps,
+        ...props,
+        ...holderProps,
+        ...holderAutoSize,
+      }
       if (typeof propsForHolder.children === 'string') {
         propsForHolder.children = propsForHolder.children.replace(/ /g, $nbsp)
       }
@@ -215,7 +232,7 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
 
       return (
         <div ref="fake">
-          <div ref="env" style={envStyle}>
+          <div ref="env" style={envDefaultStyle}>
             { React.createElement(holder, propsForHolder) }
           </div>
         </div>
@@ -228,10 +245,16 @@ export default function (targetComponent, condition, holder = Fill, holderProps 
   Hold.displayName = `Hold(${targetComponentName})`
 
   Hold.propTypes = {
+    holder: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    holderProps: PropTypes.object,
+    props: PropTypes.object, // the alias of 'holderProps'
     innerRef: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   }
 
   Hold.defaultProps = {
+    holder: defaultHolder,
+    holderProps: null,
+    props: null,
     innerRef: null,
   }
 

@@ -5,7 +5,7 @@ import { CENTER } from '../align'
 
 const Fill = ({ color, width, height, children, align }) => {
   const lineHeight = (typeof height === 'string' && height.trim()) ?
-    height : typeof height === 'string' ?
+    height : typeof height === 'number' ?
     `${height}px` : null
 
   return (
