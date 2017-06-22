@@ -58,7 +58,7 @@ class App extends Component {
             if (!index || index === state.content.length - 1) {
               return <P holder={holders.Text} props={{length: 220}} key={index} className="article-content_p">{ chunk }</P>
             }
-            return <P holder={holders.Text} props={{length: 320}} key={index} className="article-content_p">{ chunk }</P>
+            return <P holder={holders.Text} props={{length: 350}} key={index} className="article-content_p">{ chunk }</P>
           })}
         </div>
       </div>
