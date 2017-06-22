@@ -72,6 +72,7 @@ export default function (targetComponent, condition,
           this.updateHolderSizeIfNecessary()
         }
       }
+      this.cancelHold = this.cancelHold.bind(this)
     }
 
     componentWillMount() {
@@ -178,8 +179,14 @@ export default function (targetComponent, condition,
     }
 
     cancelHold() {
+      const { fake } = this.refs
+      if (fake) fake.style = {}
       refiter.undo()
-      this.setState({ hold: false })
+      this.originNodeStyle = null
+      this.setState({
+        hold: false,
+        copy: false,
+      })
     }
 
     updateHolderSizeIfNecessary() {
@@ -195,8 +202,8 @@ export default function (targetComponent, condition,
       if (!isNull(customWidth) && !isNull(customHeight)) return
 
       const size = getNodeSize(env)
-      const width = isNull(customWidth) ? size.width : customWidth
-      const height = isNull(customHeight) ? size.height : customHeight
+      const width = isNull(customWidth) ? size.width : null
+      const height = isNull(customHeight) ? size.height : null
       if (holderAutoSize.width !== width || holderAutoSize.height !== height) {
         this.setState({
           holderAutoSize: {
@@ -223,8 +230,10 @@ export default function (targetComponent, condition,
         ...holderDefaultProps,
         ...props,
         ...holderProps,
-        ...holderAutoSize,
+        cancelHold: this.cancelHold,
       }
+      isNull(propsForHolder.width) && (propsForHolder.width = holderAutoSize.width)
+      isNull(propsForHolder.height) && (propsForHolder.height = holderAutoSize.height)
       if (typeof propsForHolder.children === 'string') {
         propsForHolder.children = propsForHolder.children.replace(/ /g, $nbsp)
       }
