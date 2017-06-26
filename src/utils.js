@@ -1,6 +1,3 @@
-const window = global
-const document = window.document
-
 export const isNull = value => value === undefined || value === null
 
 export const isFunction = value => typeof value === 'function'

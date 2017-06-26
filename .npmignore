@@ -3,5 +3,4 @@
 .editorconfig
 .travis.yml
 .idea/
-examples/
 node_modules/

@@ -5,10 +5,10 @@ import shapes from './shapes'
 import align from './align'
 
 const $nbsp = '\u00A0'
-const holdable = Decorator
+const holdify = Decorator
 
 Hoc.Decorator = Decorator
-Hoc.holdable = holdable // alias
+Hoc.holdify = holdify // alias
 Hoc.hoders = holders
 Hoc.shapes = shapes
 Hoc.align = align
@@ -18,7 +18,7 @@ export default Hoc
 
 export {
   Decorator,
-  holdable, // alias
+  holdify, // alias
   holders,
   shapes,
   align,

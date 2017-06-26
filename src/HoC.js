@@ -12,7 +12,6 @@ import createRefiter from './createRefiter'
 
 const $nbsp = '\u00A0'
 const blankLength = 10
-const window = global
 const envDefaultStyle = {
   position: 'relative',
   padding: '0px',
@@ -179,10 +178,16 @@ export default function (targetComponent, condition,
     }
 
     cancelHold() {
-      const { fake } = this.refs
+      const { fake, env } = this.refs
+      // manual restore fake and env node style,
+      // because their style had been modified by method 'setFakeNodeStyle'
       if (fake) fake.style = {}
+      if (env) env.style.overflow = 'visible'
+      // restore component lifecycle methods
       refiter.undo()
+      // clear origin node style
       this.originNodeStyle = null
+      // exit hold state
       this.setState({
         hold: false,
         copy: false,
@@ -231,6 +236,7 @@ export default function (targetComponent, condition,
         ...props,
         ...holderProps,
         cancelHold: this.cancelHold,
+        targetProps: propsForElement,
       }
       isNull(propsForHolder.width) && (propsForHolder.width = holderAutoSize.width)
       isNull(propsForHolder.height) && (propsForHolder.height = holderAutoSize.height)

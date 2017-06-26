@@ -2,7 +2,7 @@
  * Created by toplan on 17/6/9.
  */
 import React from 'react'
-import { holdable } from 'react-hold' //try use decorator
+import { holdify } from 'react-hold' //try use decorator
 
 const H = ({ size, className, style, children }) => {
   size = Math.ceil(size)
@@ -21,4 +21,4 @@ H.defaultProps = {
 
 const holdCondition = (props, prevProps) => !props.children
 
-export default holdable(holdCondition)(H)
+export default holdify(holdCondition)(H)

@@ -1,8 +1,20 @@
 {
   "presets": [
     "react",
-    "es2015",
+    ["es2015", { "modules": false }],
     "stage-2"
   ],
-  "plugins": ["transform-decorators-legacy"]
+  "plugins": ["transform-decorators-legacy"],
+  "env": {
+    "commonjs": {
+      "plugins": [
+        ["transform-es2015-modules-commonjs", { "loose": true }],
+      ]
+    },
+    "test": {
+      "plugins": [
+        ["transform-es2015-modules-commonjs", { "loose": true }],
+      ]
+    }
+  }
 }

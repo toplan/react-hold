@@ -1,3 +1,6 @@
+package-lock.json
 .idea/
 node_modules/
+es/
 lib/
+umd/
