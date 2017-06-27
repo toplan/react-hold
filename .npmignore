@@ -1,6 +1,7 @@
 .babelrc
+.codecov.yml
 .eslintrc.json
-.editorconfig
 .travis.yml
 .idea/
 node_modules/
+package-lock.json
