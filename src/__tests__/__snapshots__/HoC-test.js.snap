@@ -1,0 +1,190 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Holdable HoC component Do not hold 1`] = `
+<Container
+  presentation={[Function]}
+>
+  <div>
+    <Hold(p)
+      holder={[Function]}
+      holderProps={null}
+      innerRef={null}
+      name="foo"
+      props={null}
+    >
+      <p
+        name="foo"
+      >
+        foo
+      </p>
+    </Hold(p)>
+  </div>
+</Container>
+`;
+
+exports[`Holdable HoC component Hold 1`] = `
+<Container
+  presentation={[Function]}
+>
+  <div>
+    <Hold(p)
+      holder={[Function]}
+      holderProps={null}
+      innerRef={null}
+      name="foo"
+      props={null}
+    >
+      <div>
+        <div
+          style={
+            Object {
+              "border": "none",
+              "height": "100%",
+              "margin": "0px",
+              "overflow": "visible",
+              "padding": "0px",
+              "position": "relative",
+              "width": "100%",
+            }
+          }
+        >
+          <Fill
+            align="center"
+            cancelHold={[Function]}
+            color="#eee"
+            height={0}
+            targetProps={
+              Object {
+                "children": "",
+                "name": "foo",
+              }
+            }
+            width={0}
+          >
+            <div
+              style={
+                Object {
+                  "textAlign": "center",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "background": "#eee",
+                    "display": "inline-block",
+                    "height": 0,
+                    "lineHeight": "0px",
+                    "textAlign": "center",
+                    "width": 0,
+                  }
+                }
+              >
+                          
+              </div>
+            </div>
+          </Fill>
+        </div>
+      </div>
+    </Hold(p)>
+  </div>
+</Container>
+`;
+
+exports[`Holdable HoC component Hold 2`] = `
+<Container
+  presentation={[Function]}
+>
+  <div>
+    <Hold(p)
+      holder={[Function]}
+      holderProps={null}
+      innerRef={null}
+      name="foo"
+      props={null}
+    >
+      <p
+        name="foo"
+      >
+        I am child, then cancel hold.
+      </p>
+    </Hold(p)>
+  </div>
+</Container>
+`;
+
+exports[`Holdable HoC component Hold 3`] = `
+<Container
+  presentation={[Function]}
+>
+  <div>
+    <Hold(p)
+      holder={[Function]}
+      holderProps={
+        Object {
+          "color": "green",
+          "height": 30,
+          "width": 40,
+        }
+      }
+      innerRef={null}
+      name="bar"
+      props={null}
+    >
+      <div>
+        <div
+          style={
+            Object {
+              "border": "none",
+              "height": "100%",
+              "margin": "0px",
+              "overflow": "visible",
+              "padding": "0px",
+              "position": "relative",
+              "width": "100%",
+            }
+          }
+        >
+          <Square
+            align="center"
+            cancelHold={[Function]}
+            color="green"
+            height={30}
+            side={null}
+            targetProps={
+              Object {
+                "children": "",
+                "name": "bar",
+              }
+            }
+            width={40}
+          >
+            <div
+              style={
+                Object {
+                  "textAlign": "center",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "background": "green",
+                    "display": "inline-block",
+                    "height": 30,
+                    "lineHeight": "30px",
+                    "textAlign": "center",
+                    "width": 30,
+                  }
+                }
+              >
+                          
+              </div>
+            </div>
+          </Square>
+        </div>
+      </div>
+    </Hold(p)>
+  </div>
+</Container>
+`;

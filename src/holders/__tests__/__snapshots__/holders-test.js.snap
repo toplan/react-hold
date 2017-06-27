@@ -1,0 +1,438 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Holders render Circle correctly 1`] = `
+<Circle
+  align="center"
+  diameter={null}
+  height={null}
+  width={null}
+>
+  <Square
+    align="center"
+    color="transparent"
+    height={null}
+    side={null}
+    width={null}
+  >
+    <div
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "background": "transparent",
+            "display": "inline-block",
+            "height": null,
+            "lineHeight": null,
+            "textAlign": "center",
+            "width": null,
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "background": undefined,
+              "borderRadius": "50%",
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        >
+          foo-0
+        </div>
+      </div>
+    </div>
+  </Square>
+</Circle>
+`;
+
+exports[`Holders render Circle correctly 2`] = `
+<Circle
+  align="center"
+  color="red"
+  diameter={null}
+  height={60}
+  width={50}
+>
+  <Square
+    align="center"
+    color="transparent"
+    height={60}
+    side={null}
+    width={50}
+  >
+    <div
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "background": "transparent",
+            "display": "inline-block",
+            "height": 50,
+            "lineHeight": "50px",
+            "textAlign": "center",
+            "width": 50,
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "background": "red",
+              "borderRadius": "50%",
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        >
+          foo-0-1
+        </div>
+      </div>
+    </div>
+  </Square>
+</Circle>
+`;
+
+exports[`Holders render Fill correctly 1`] = `
+<Fill
+  align="center"
+  height={null}
+  width={null}
+>
+  <div
+    style={
+      Object {
+        "textAlign": "center",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "background": undefined,
+          "display": "inline-block",
+          "height": null,
+          "lineHeight": null,
+          "textAlign": "center",
+          "width": null,
+        }
+      }
+    >
+      foo-1
+    </div>
+  </div>
+</Fill>
+`;
+
+exports[`Holders render Fill correctly 2`] = `
+<Fill
+  align="center"
+  color="red"
+  height="30px"
+  width="60%"
+>
+  <div
+    style={
+      Object {
+        "textAlign": "center",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "background": "red",
+          "display": "inline-block",
+          "height": "30px",
+          "lineHeight": "30px",
+          "textAlign": "center",
+          "width": "60%",
+        }
+      }
+    >
+      foo-1-1
+    </div>
+  </div>
+</Fill>
+`;
+
+exports[`Holders render Square correctly 1`] = `
+<Square
+  align="center"
+  height={null}
+  side={null}
+  width={null}
+>
+  <div
+    style={
+      Object {
+        "textAlign": "center",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "background": undefined,
+          "display": "inline-block",
+          "height": null,
+          "lineHeight": null,
+          "textAlign": "center",
+          "width": null,
+        }
+      }
+    >
+      foo-2
+    </div>
+  </div>
+</Square>
+`;
+
+exports[`Holders render Square correctly 2`] = `
+<Square
+  align="center"
+  color="red"
+  height={60}
+  side={null}
+  width={50}
+>
+  <div
+    style={
+      Object {
+        "textAlign": "center",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "background": "red",
+          "display": "inline-block",
+          "height": 50,
+          "lineHeight": "50px",
+          "textAlign": "center",
+          "width": 50,
+        }
+      }
+    >
+      foo-2-1
+    </div>
+  </div>
+</Square>
+`;
+
+exports[`Holders render Table correctly 1`] = `
+<Table
+  align="center"
+  cols={2}
+  gap={2}
+  height={null}
+  rows={2}
+  width={null}
+>
+  <div
+    style={
+      Object {
+        "textAlign": "center",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "background": "transparent",
+          "display": "inline-block",
+          "height": null,
+          "position": "relative",
+          "width": null,
+        }
+      }
+    >
+                
+    </div>
+  </div>
+</Table>
+`;
+
+exports[`Holders render Table correctly 2`] = `
+<Table
+  align="center"
+  color="red"
+  cols={2}
+  gap={4}
+  height={60}
+  rows={2}
+  width={360}
+>
+  <div
+    style={
+      Object {
+        "textAlign": "center",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "background": "transparent",
+          "display": "inline-block",
+          "height": 60,
+          "position": "relative",
+          "width": 360,
+        }
+      }
+    >
+                
+      <div
+        style={
+          Object {
+            "background": "red",
+            "height": 28,
+            "left": 0,
+            "lineHeight": "28px",
+            "overflow": "hidden",
+            "position": "absolute",
+            "textAlign": "center",
+            "top": 0,
+            "width": 178,
+          }
+        }
+      >
+        foo-3-1
+      </div>
+      <div
+        style={
+          Object {
+            "background": "red",
+            "height": 28,
+            "left": 0,
+            "lineHeight": "28px",
+            "overflow": "hidden",
+            "position": "absolute",
+            "textAlign": "center",
+            "top": 32,
+            "width": 178,
+          }
+        }
+      >
+        foo-3-1
+      </div>
+      <div
+        style={
+          Object {
+            "background": "red",
+            "height": 28,
+            "left": 182,
+            "lineHeight": "28px",
+            "overflow": "hidden",
+            "position": "absolute",
+            "textAlign": "center",
+            "top": 0,
+            "width": 178,
+          }
+        }
+      >
+        foo-3-1
+      </div>
+      <div
+        style={
+          Object {
+            "background": "red",
+            "height": 28,
+            "left": 182,
+            "lineHeight": "28px",
+            "overflow": "hidden",
+            "position": "absolute",
+            "textAlign": "center",
+            "top": 32,
+            "width": 178,
+          }
+        }
+      >
+        foo-3-1
+      </div>
+    </div>
+  </div>
+</Table>
+`;
+
+exports[`Holders render Text correctly 1`] = `
+<Text
+  fontSize="0.7em"
+  height={null}
+  length={100}
+  lineHeight={2.3}
+  width={null}
+>
+  <div
+    style={
+      Object {
+        "background": "transparent",
+        "fontSize": "0.7em",
+        "height": null,
+        "lineHeight": 2.3,
+        "overflow": "hidden",
+        "width": null,
+      }
+    }
+  >
+    <span
+      style={
+        Object {
+          "background": undefined,
+          "wordBreak": "break-word",
+          "wordWrap": "break-word",
+        }
+      }
+    >
+                                                                                                                                                                                                              
+    </span>
+  </div>
+</Text>
+`;
+
+exports[`Holders render Text correctly 2`] = `
+<Text
+  color="red"
+  fontSize="0.7em"
+  height={null}
+  length={300}
+  lineHeight={2.3}
+  width={null}
+>
+  <div
+    style={
+      Object {
+        "background": "transparent",
+        "fontSize": "0.7em",
+        "height": null,
+        "lineHeight": 2.3,
+        "overflow": "hidden",
+        "width": null,
+      }
+    }
+  >
+    <span
+      style={
+        Object {
+          "background": "red",
+          "wordBreak": "break-word",
+          "wordWrap": "break-word",
+        }
+      }
+    >
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+    </span>
+  </div>
+</Text>
+`;

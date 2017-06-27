@@ -5,7 +5,7 @@ export const symbol = Symbol ? Symbol('react-hold/refiter') : '$$react-hold/refi
 /**
  * Create APIs to refit the component lifecycle methods.
  *
- * @param {Component} component
+ * @param {Component|string} component
  * @returns {{refit, undo}}
  */
 export default function (component) {
