@@ -8,8 +8,9 @@ h3 {
 
 .container {
     position: relative;
-    padding: 0 15px;
-    margin: 30px 10%;
+    margin: 60px auto;
+    padding: 0;
+    width: 800px;
 }
 
 .circle {

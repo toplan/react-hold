@@ -1,6 +1,27 @@
 var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
+var NODE_ENV = process.env.NODE_ENV || 'development';
+var isDev = NODE_ENV !== 'production';
+
+var plugins = [
+  new webpack.optimize.CommonsChunkPlugin('shared.js'),
+  new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
+  })
+];
+
+!isDev && plugins.push(
+  new webpack.optimize.UglifyJsPlugin({
+    compressor: {
+      pure_getters: true,
+      unsafe: true,
+      unsafe_comps: true,
+      screw_ie8: true,
+      warnings: false,
+    },
+  })
+);
 
 function isDirectory(dir) {
   return fs.lstatSync(dir).isDirectory();
@@ -8,7 +29,7 @@ function isDirectory(dir) {
 
 module.exports = {
 
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
 
   entry: fs.readdirSync(__dirname).reduce(function (entries, dir) {
     var isDraft = dir.charAt(0) === '_' || dir.indexOf('components') >= 0;
@@ -23,7 +44,8 @@ module.exports = {
   output: {
     filename: '[name].js',
     chunkFilename: '[id].chunk.js',
-    publicPath: '/__build__/'
+    publicPath: isDev ? '/__build__/' : '../js/react-hold/',
+    path: '../toplan.github.io/js/react-hold/'
   },
 
   module: {
@@ -55,11 +77,6 @@ module.exports = {
     }
   },
 
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin('shared.js'),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-    })
-  ]
+  plugins
 
 };

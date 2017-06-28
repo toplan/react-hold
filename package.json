@@ -13,7 +13,7 @@
   "scripts": {
     "clean": "rimraf es lib umd",
     "prepare": "npm run clean && npm run build",
-    "prepublishOnly": "npm run test && npm run lint",
+    "prepack": "npm run test && npm run lint",
     "build": "npm run build:es && npm run build:commonjs && npm run build:umd && npm run build:umd:min",
     "build:es": "babel src --out-dir es",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
@@ -23,7 +23,8 @@
     "test": "jest",
     "test:src": "jest src",
     "test:in:ci": "npm run test:src && codecov",
-    "examples": "cross-env BABEL_ENV=commonjs webpack-dev-server --hot --inline --config examples/webpack.config.js --content-base examples"
+    "examples": "cross-env BABEL_ENV=commonjs webpack-dev-server --hot --inline --config examples/webpack.config.js --content-base examples",
+    "examples:build": "cross-env NODE_ENV=production BABEL_ENV=commonjs webpack --config examples/webpack.config.js"
   },
   "keywords": [
     "react",

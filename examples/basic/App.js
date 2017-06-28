@@ -2,7 +2,7 @@ import './style.css'
 import React, { Component } from 'react'
 import hold, { holders, align } from 'react-hold'
 import { Div, H, Img, P } from '$components'
-import logo from '../_img/github-toplan.png';
+import image from '../_img/github-toplan.png';
 
 class App extends Component {
   constructor(...args) {
@@ -22,7 +22,7 @@ class App extends Component {
         this.setState({
           className: 'change-style-to',
           height: 80,
-          src: logo,
+          src: image,
         })
       }
     }, 5000)

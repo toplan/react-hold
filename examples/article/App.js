@@ -2,6 +2,7 @@ import './style.css'
 import React, { Component } from 'react'
 import hold, { holdable, holders, align } from 'react-hold'
 import { H, Img, P, Span } from '$components'
+import image from '../_img/james-k-nelson.jpg';
 
 class App extends Component {
   constructor(...args) {
@@ -26,7 +27,7 @@ class App extends Component {
       this.setState({
         title: 'Higher-Order Components',
         author: {
-          avatar: 'http://jamesknelson.com/wp-content/uploads/2016/11/james-k-nelson-1-150x150.jpg',
+          avatar: image,
           name: 'James K Nelson',
         },
         content: [
