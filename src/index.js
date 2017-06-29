@@ -1,4 +1,4 @@
-import Hoc from './HoC'
+import HoC from './HoC'
 import Decorator from './Decorator'
 import holders from './holders/index'
 import shapes from './shapes'
@@ -7,18 +7,18 @@ import align from './align'
 const $nbsp = '\u00A0'
 const holdify = Decorator
 
-Hoc.Decorator = Decorator
-Hoc.holdify = holdify // alias
-Hoc.hoders = holders
-Hoc.shapes = shapes
-Hoc.align = align
-Hoc.$nbsp = $nbsp
+HoC.Decorator = Decorator
+HoC.holdify = holdify // The alias of decorator
+HoC.hoders = holders
+HoC.shapes = shapes
+HoC.align = align
+HoC.$nbsp = $nbsp
 
-export default Hoc
+export default HoC
 
 export {
   Decorator,
-  holdify, // alias
+  holdify, // The alias of decorator
   holders,
   shapes,
   align,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import shapes from '../shapes'
 import { CENTER } from '../align'
 
-const Fill = ({ color, width, height, children, align }) => {
+const Fill = ({ color, width, height, children, align, fillerStyle }) => {
   const lineHeight = (typeof height === 'string' && height.trim()) ?
     height : typeof height === 'number' ?
     `${height}px` : null
@@ -12,9 +12,10 @@ const Fill = ({ color, width, height, children, align }) => {
     <div style={{ textAlign: align }}>
       <div
         style={{
+          background: color,
+          ...fillerStyle,
           display: 'inline-block',
           textAlign: 'center',
-          background: color,
           width,
           height,
           lineHeight,
@@ -37,6 +38,7 @@ Fill.defaultProps = {
   width: null,
   height: null,
   align: CENTER,
+  fillerStyle: null,
 }
 
 export default Fill

@@ -4,7 +4,7 @@ import shapes from '../shapes'
 import { CENTER } from '../align'
 import { isNull } from '../utils'
 
-const Square = ({ color, width, height, children, side, align }) => {
+const Square = ({ color, width, height, children, side, align, fillerStyle }) => {
   if (isNull(side)) {
     if (!isNull(width) && !isNull(height)) {
       side = width > height ? height : width
@@ -22,9 +22,10 @@ const Square = ({ color, width, height, children, side, align }) => {
     <div style={{ textAlign: align }}>
       <div
         style={{
+          background: color,
+          ...fillerStyle,
           display: 'inline-block',
           textAlign: 'center',
-          background: color,
           width: side,
           height: side,
           lineHeight,
@@ -47,6 +48,7 @@ Square.defaultProps = {
   height: null,
   side: null,
   align: CENTER,
+  fillerStyle: null,
 }
 
 export default Square

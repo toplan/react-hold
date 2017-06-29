@@ -12,6 +12,10 @@ describe('Holders', () => {
       color: 'red',
       width: 50,
       height: 60,
+      fillerStyle: {
+        width: 40,
+        color: 'blue',
+      },
     }
     wrapper = mount(<Circle {...props}>foo-0-1</Circle>)
     expect(wrapper).toMatchSnapshot()

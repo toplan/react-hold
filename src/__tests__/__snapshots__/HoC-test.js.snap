@@ -52,6 +52,7 @@ exports[`Holdable HoC component Hold 1`] = `
             align="center"
             cancelHold={[Function]}
             color="#eee"
+            fillerStyle={null}
             height={0}
             targetProps={
               Object {
@@ -149,6 +150,7 @@ exports[`Holdable HoC component Hold 3`] = `
             align="center"
             cancelHold={[Function]}
             color="green"
+            fillerStyle={null}
             height={30}
             side={null}
             targetProps={

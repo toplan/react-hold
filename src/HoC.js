@@ -26,7 +26,7 @@ const envDefaultStyle = {
  * Hold the target component,
  * returns a holdable higher-order component.
  *
- * @param {Component|string} targetComponent
+ * @param {Component|String} targetComponent
  * @param {Function} condition
  * @param {Component} defaultHolder
  * @param {Object} holderDefaultProps

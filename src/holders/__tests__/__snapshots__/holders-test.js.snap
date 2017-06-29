@@ -4,12 +4,14 @@ exports[`Holders render Circle correctly 1`] = `
 <Circle
   align="center"
   diameter={null}
+  fillerStyle={null}
   height={null}
   width={null}
 >
   <Square
     align="center"
     color="transparent"
+    fillerStyle={null}
     height={null}
     side={null}
     width={null}
@@ -56,12 +58,19 @@ exports[`Holders render Circle correctly 2`] = `
   align="center"
   color="red"
   diameter={null}
+  fillerStyle={
+    Object {
+      "color": "blue",
+      "width": 40,
+    }
+  }
   height={60}
   width={50}
 >
   <Square
     align="center"
     color="transparent"
+    fillerStyle={null}
     height={60}
     side={null}
     width={50}
@@ -90,6 +99,7 @@ exports[`Holders render Circle correctly 2`] = `
             Object {
               "background": "red",
               "borderRadius": "50%",
+              "color": "blue",
               "height": "100%",
               "width": "100%",
             }
@@ -106,6 +116,7 @@ exports[`Holders render Circle correctly 2`] = `
 exports[`Holders render Fill correctly 1`] = `
 <Fill
   align="center"
+  fillerStyle={null}
   height={null}
   width={null}
 >
@@ -138,6 +149,7 @@ exports[`Holders render Fill correctly 2`] = `
 <Fill
   align="center"
   color="red"
+  fillerStyle={null}
   height="30px"
   width="60%"
 >
@@ -169,6 +181,7 @@ exports[`Holders render Fill correctly 2`] = `
 exports[`Holders render Square correctly 1`] = `
 <Square
   align="center"
+  fillerStyle={null}
   height={null}
   side={null}
   width={null}
@@ -202,6 +215,7 @@ exports[`Holders render Square correctly 2`] = `
 <Square
   align="center"
   color="red"
+  fillerStyle={null}
   height={60}
   side={null}
   width={50}
@@ -235,6 +249,7 @@ exports[`Holders render Table correctly 1`] = `
 <Table
   align="center"
   cols={2}
+  fillerStyle={null}
   gap={2}
   height={null}
   rows={2}
@@ -269,6 +284,7 @@ exports[`Holders render Table correctly 2`] = `
   align="center"
   color="red"
   cols={2}
+  fillerStyle={null}
   gap={4}
   height={60}
   rows={2}
@@ -368,6 +384,7 @@ exports[`Holders render Table correctly 2`] = `
 
 exports[`Holders render Text correctly 1`] = `
 <Text
+  fillerStyle={null}
   fontSize="0.7em"
   height={null}
   length={100}
@@ -404,6 +421,7 @@ exports[`Holders render Text correctly 1`] = `
 exports[`Holders render Text correctly 2`] = `
 <Text
   color="red"
+  fillerStyle={null}
   fontSize="0.7em"
   height={null}
   length={300}

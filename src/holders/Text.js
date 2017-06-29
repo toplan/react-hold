@@ -4,7 +4,7 @@ import shapes from '../shapes'
 
 const $nbsp = '\u00A0'
 
-const Text = ({ color, width, height, length, lineHeight, fontSize }) => (
+const Text = ({ color, width, height, length, lineHeight, fontSize, fillerStyle }) => (
   <div
     style={{
       background: 'transparent',
@@ -18,6 +18,7 @@ const Text = ({ color, width, height, length, lineHeight, fontSize }) => (
     <span
       style={{
         background: color,
+        ...fillerStyle,
         wordBreak: 'break-word',
         wordWrap: 'break-word',
       }}
@@ -40,6 +41,7 @@ Text.defaultProps = {
   length: 100,
   lineHeight: 2.3,
   fontSize: '0.7em',
+  fillerStyle: null,
 }
 
 export default Text

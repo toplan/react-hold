@@ -21,7 +21,7 @@ const computeCellSide = (total, number, gap) => {
   return rest / number
 }
 
-const Table = ({ color, width, height, children, cols, rows, gap, align }) => {
+const Table = ({ color, width, height, children, cols, rows, gap, align, fillerStyle }) => {
   cols = Math.ceil(cols)
   rows = Math.ceil(rows)
 
@@ -39,10 +39,11 @@ const Table = ({ color, width, height, children, cols, rows, gap, align }) => {
           <div
             key={`${i}-${j}`}
             style={{
+              background: color,
+              ...fillerStyle,
               position: 'absolute',
               top: j * (cellHeight + gap),
               left: i * (cellWidth + gap),
-              background: color,
               width: cellWidth,
               height: cellHeight,
               lineHeight: `${cellHeight}px`,
@@ -89,6 +90,7 @@ Table.defaultProps = {
   rows: ROWS,
   gap: GAP,
   align: CENTER,
+  fillerStyle: null,
 }
 
 export default Table
