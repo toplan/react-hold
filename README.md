@@ -1,6 +1,8 @@
 # Intro
 
-Hold the empty presentational(dumb) components in ReactJs.
+Automatically show a well-fitting placeholder for dumb component while its content is loading. [[Demo here]](http://toplan.github.io/react-hold/)
+
+> What is the meaning of the word `hold` in the project name? It is intercepted from the word `placeholder`, represents the action to make component has placeholder.
 
 [![build status](https://travis-ci.org/toplan/react-hold.svg?branch=master)](https://travis-ci.org/toplan/react-hold)
 [![codecov](https://codecov.io/gh/toplan/react-hold/branch/master/graph/badge.svg)](https://codecov.io/gh/toplan/react-hold)
@@ -9,7 +11,7 @@ Hold the empty presentational(dumb) components in ReactJs.
 
 ![react-hold-article](http://toplan.github.io/img/react-hold-article.gif)
 
-[Demo here](http://toplan.github.io/react-hold/)
+
 
 # Install
 
@@ -25,11 +27,11 @@ import { render } from 'react-dom'
 import hold from 'react-hold'
 import MyComponent from './path/to/MyCompnent'
 
-// hold the bulit-in component
+// make the bulit-in component has placeholder
 const P = hold('p', (props) => !props.children)
 
-// hold the composite component
-const HoldableMyComponent = hold(MyComponent, (props) => !props.data)
+// make the composite component has placeholder
+const MyComponentWithPlaceholder = hold(MyComponent, (props) => !props.data)
 
 class App extends React.Component {
   constructor(...args) {
@@ -44,7 +46,7 @@ class App extends React.Component {
     return (
       <div className="my-class-name">
         <P>{ this.state.title }</P>
-        <HoldableMyComponent data={this.state.data} />
+        <MyComponentWithPlaceholder data={this.state.data} />
       </div>
     )
   }
@@ -53,7 +55,7 @@ class App extends React.Component {
 render(<App />, document.body)
 ```
 
-If you want to make your component holdable by default, try decorator.
+If you want to make your component has placeholder by default, try decorator.
 
 ```js
 import { holdify } from 'react-hold'
@@ -75,30 +77,29 @@ import hold, { holdify } from 'react-hold'
 
 ### hold(Component, condition, [defaultHolder], [holderDefaultProps])
 
-Create a higher-order component to hold the empty area which presented by the original component.
-The higher-order component just a controller to control hold behavior, and the real filler is a series of different holders (later introduce).
+Create a higher-order component which had bound the original component and placeholder together.
+The higher-order component is a controller to control show original component or placeholder.
 
 ##### Arguments
 
-1. `Component` (Component) [Required]: The target(original) component, should be a presentational(dumb) component.
-2. `condition` (Function) [Required]: The condition function will be called with arguments `props` and `prevProps`.
-It should returns a bool value to judge the target component whether be empty (`true` means empty).
-If the target component is empty, the higher-order component will use a holder which you specified to hold the empty area.
-Otherwise, the higher-order component will cancel hold, and present the original component.
-3. `defaultHolder` (Component) [Optional]: The default holder. Default `Fill`.
-4. `holderDefaultProps` (Object) [Optional]: The default props of holder.
+- `Component` (Component) [Required]: The target(original) component, should be a dumb(presentational) component.
+- `condition` (Function) [Required]: The condition function will be called with arguments `props` and `prevProps`.
+It needs to returns a bool value to judge whether to show the placeholder (`true` means yes).
+If returns `false`, the higher-order component will remove placeholder, and show the original component.
+- `defaultHolder` (Component) [Optional]: The default placeholder. Default `Fill` (later introduce).
+- `holderDefaultProps` (Object) [Optional]: The default props of placeholder.
 
 ##### Returns
 
-(Component): A higher-order holdable component which wrap the original component.
+(Component): A higher-order component which bound the original component and placeholder together.
 
-These props will be held by this higher-order component:
-1. `holder` (Component) [Optional]: The holder component, will override the default holder.
-2. `holderProps` (Object) [Optional]: The props of holder, will shallow override the default props.
-3. `props` (Object) [Optional]: The alias of `holderProps`.
-4. `innerRef` (Function|String) [Optional]: The ref of original component.
+These props will be held by the higher-order component:
+- `holder` (Component) [Optional]: The placeholder component, will override the default placeholder.
+- `holderProps` (Object) [Optional]: The props of placeholder, will shallow override the default props.
+- `props` (Object) [Optional]: The alias of `holderProps`.
+- `innerRef` (Function|String) [Optional]: The ref of original component.
 
-And the rest props will be passed to the original component.
+The rest props will be passed to the original component.
 
 ### holdify(condition, [defaultHolder], [holderDefaultProps])
 
@@ -110,61 +111,60 @@ The handy decorator made by `hold` API.
 import { Fill, Square, Circle, Text, Table } from 'react-hold/holders'
 ```
 
-Every holders will put a special content(filler) in the empty area which presented by original component.
+Every holders(also known as placeholder) will show a special content.
 
-Common props:
-1. `color` (String) [Optional]: The color of holder. Default `#eee`.
-2. `cancelHold` (Function): Invoke this function can manually cancel hold. Injected by the higher-order component, and can't be override.
-3. `targetProps` (Function): The props of target component. Injected by the higher-order component, and can't be override.
-4. `children` [Optional]: The children elements.
+##### Common Props
+- `color` (String) [Optional]: The color of holder. Default `#eee`.
+- `cancelHold` (Function): Invoke this function can manually cancel hold, injected by the higher-order component, and can't be override.
+- `targetProps` (Function): The props of target component, injected by the higher-order component, and can't be override.
 
 ### Fill
 
-This holder will put a rectangle in the empty area.
+This holder will show a rectangle.
 
-The props:
-1. `width` (String|Number) [Optional]: The width of rectangle.
-2. `height` (String|Number) [Optional]: The height of rectangle.
-3. `align` (String) [Optional]: If you set a width(etc. `300`) which lower than the real width of empty area,
+##### Props
+- `width` (String|Number) [Optional]: The width of rectangle.
+- `height` (String|Number) [Optional]: The height of rectangle.
+- `align` (String) [Optional]: If you set a width(etc. `300`) which lower than the real width of empty area,
 the rectangle will not fill in the full empty area, but you can use this prop to set the align.
 Support `left`, `right`, `center`. Default `center`.
 
 ### Square
 
-This holder will put a square in the empty area.
+This holder will show a square.
 
-The props:
-1. `side` (String|Number) [Optional]: the side length of square.
-2. `align` (String) [Optional]: Similar to the align prop of `Fill` holder.
+##### Props
+- `side` (String|Number) [Optional]: the side length of square.
+- `align` (String) [Optional]: Similar to the align prop of `Fill` holder.
 
 ### Circle
 
-This holder will put a circle in the empty area.
+This holder will show a circle.
 
-The props:
-1. `diameter` (String|Number) [Optional]: The diameter of circle.
-2. `align` (String) [Optional]: Similar to the align prop of `Fill` holder.
+##### Props
+- `diameter` (String|Number) [Optional]: The diameter of circle.
+- `align` (String) [Optional]: Similar to the align prop of `Fill` holder.
 
 ### Text
 
-This holder will put a piece of blank text in the empty area.
+This holder will show a piece of blank text.
 
-The props:
-1. `length` (Number) [Optional]: The length of text. Default `100`.
-2. `lineHeight` (String|Number) [Optional]: the line height of text. Default `2.3`.
-3. `fontSize` (String|Number) [Optional]: the font size of text. Default `'0.7em'`.
+##### Props
+- `length` (Number) [Optional]: The length of text. Default `100`.
+- `lineHeight` (String|Number) [Optional]: the line height of text. Default `2.3`.
+- `fontSize` (String|Number) [Optional]: the font size of text. Default `'0.7em'`.
 
 ### Table
 
-This holder will put a table in the empty area.
+This holder will show a table.
 
-The props:
-1. `width` (Number) [Optional]: The width of table.
-2. `height` (Number) [Optional]: The height of table.
-3. `cols` (Number) [Optional]: The cols number of table. Default `2`.
-4. `rows` (Number) [Optional]: The rows number of table. Default `2`.
-5. `gap` (Number) [Optional]: The gap between cols and rows. Default `2`.
-6. `align` (String) [Optional]: Similar to the align prop of `Fill` holder.
+##### Props
+- `width` (Number) [Optional]: The width of table.
+- `height` (Number) [Optional]: The height of table.
+- `cols` (Number) [Optional]: The cols number of table. Default `2`.
+- `rows` (Number) [Optional]: The rows number of table. Default `2`.
+- `gap` (Number) [Optional]: The gap between cols and rows. Default `2`.
+- `align` (String) [Optional]: Similar to the align prop of `Fill` holder.
 
 # License
 
