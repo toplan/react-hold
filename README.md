@@ -2,7 +2,7 @@
 
 Automatically show a well-fitting placeholder for dumb component while its content is loading. [[Demo here]](http://toplan.github.io/react-hold/)
 
-> What is the meaning of the word `hold` in the project name? It is intercepted from the word `placeholder`, represents the action which make component has a placeholder.
+> What is the meaning of the word **`hold`** in this project? It's means keep(hold) the shape of the dumb component if it without content. You can also see it as an action which make the dumb component has a placeholder.
 
 [![build status](https://travis-ci.org/toplan/react-hold.svg?branch=master)](https://travis-ci.org/toplan/react-hold)
 [![codecov](https://codecov.io/gh/toplan/react-hold/branch/master/graph/badge.svg)](https://codecov.io/gh/toplan/react-hold)
@@ -10,8 +10,6 @@ Automatically show a well-fitting placeholder for dumb component while its conte
 [![npm downloads](https://img.shields.io/npm/dm/react-hold.svg)](https://www.npmjs.com/package/react-hold)
 
 ![react-hold-article](http://toplan.github.io/img/react-hold-article.gif)
-
-
 
 # Install
 
@@ -112,8 +110,8 @@ You can import the built-in placeholders from `react-hold/holders`, every differ
 
 ##### Common Props
 - `color` (String) [Optional]: The color of placeholder. Default `#eee`.
-- `cancelHold` (Function): Invoke this function to display original component, injected by the higher-order component, can't be override.
-- `targetProps` (Function): The props of target component, injected by the higher-order component, can't be override.
+- `cancelHold` (Function): Invoking this function to cancel hold shape and display the original component. This is injected by the higher-order component, can't be override.
+- `targetProps` (Function): The props of the target(original) component. This is injected by the higher-order component, can't be override.
 - `children` [Optional]
 
 ### Fill
