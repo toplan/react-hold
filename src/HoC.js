@@ -181,7 +181,7 @@ export default function (targetComponent, condition,
       const { fake, env } = this.refs
       // manual restore fake and env node style,
       // because their style had been modified by method 'setFakeNodeStyle'
-      if (fake) fake.style = {}
+      if (fake) fake.removeAttribute('style')
       if (env) env.style.overflow = 'visible'
       // restore component lifecycle methods
       refiter.undo()

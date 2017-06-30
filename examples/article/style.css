@@ -2,7 +2,8 @@
     position: relative;
     margin: 60px auto;
     padding: 0;
-    width: 800px;
+    width: 80%;
+    max-width: 800px;
 }
 
 .article-title {
@@ -19,6 +20,7 @@ a {
 
     >div {
         display: inline-block;
+        min-width: 90px; /* compatibility safari  */
     }
 
     .author-info_avatar {
@@ -40,4 +42,3 @@ a {
         text-indent: 30px;
     }
 }
-

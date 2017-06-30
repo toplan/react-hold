@@ -36,7 +36,7 @@ class App extends Component {
           'Another way of thinking about HOCs is that they let you generate code automatically. You might be familiar with this concept from other languages. For example, Ruby programmers often call it metaprogramming.',
         ]
       })
-    }, 1000)
+    }, 1600)
   }
 
   render() {

@@ -44,8 +44,10 @@ class App extends Component {
 
         <h3>Fill</h3>
         <section>
-          <Div className="square"></Div>
-          <Img props={{children: 'loading...'}} src={this.state.src} width={80} height={80}/>
+          <div className="box">
+            <Div className="square"></Div>
+            <Img props={{children: 'loading...'}} src={this.state.src} width={80} height={80}/>
+          </div>
           <br/>
           <H className={this.state.className}>
             { this.state.title }
