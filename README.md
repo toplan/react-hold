@@ -129,7 +129,7 @@ Support `left`, `right`, `center`. Default `center`.
 
 ### Square
 
-This placeholder will show a square.
+This placeholder will display a square.
 
 ##### Props
 - `side` (String|Number) [Optional]: the side length of square.
