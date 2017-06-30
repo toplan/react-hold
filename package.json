@@ -1,6 +1,6 @@
 {
   "name": "react-hold",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Hold the empty presentational components in react.js",
   "main": "lib/index.js",
   "nextjs:main": "es/index.js",

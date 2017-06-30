@@ -2,7 +2,7 @@
 
 Automatically show a well-fitting placeholder for dumb component while its content is loading. [[Demo here]](http://toplan.github.io/react-hold/)
 
-> What is the meaning of the word `hold` in the project name? It is intercepted from the word `placeholder`, represents the action to make component has a placeholder.
+> What is the meaning of the word `hold` in the project name? It is intercepted from the word `placeholder`, represents the action which make component has a placeholder.
 
 [![build status](https://travis-ci.org/toplan/react-hold.svg?branch=master)](https://travis-ci.org/toplan/react-hold)
 [![codecov](https://codecov.io/gh/toplan/react-hold/branch/master/graph/badge.svg)](https://codecov.io/gh/toplan/react-hold)
@@ -81,7 +81,7 @@ Create a higher-order component to manage the original component and [placeholde
 
 - `Component` (Component) [Required]: The target(original) component, should be a dumb(presentational) component.
 - `condition` (Function) [Required]: The condition function will be called with arguments `props` and `prevProps`.
-It needs to returns a bool value to judge whether to show the placeholder component(`true` means yes).
+It needs to returns a boolean value to judge whether to show the placeholder component(`true` means yes).
 If returns `false`, the higher-order component will remove the placeholder component, and show the original component.
 - `defaultHolder` (Component) [Optional]: The default placeholder component. Default [Fill](#fill).
 - `holderDefaultProps` (Object) [Optional]: The default props of placeholder component.
@@ -112,7 +112,7 @@ You can import the built-in placeholders from `react-hold/holders`, every differ
 
 ##### Common Props
 - `color` (String) [Optional]: The color of placeholder. Default `#eee`.
-- `cancelHold` (Function): Invoke this function can manually cancel hold, injected by the higher-order component, can't be override.
+- `cancelHold` (Function): Invoke this function to display original component, injected by the higher-order component, can't be override.
 - `targetProps` (Function): The props of target component, injected by the higher-order component, can't be override.
 - `children` [Optional]
 
@@ -124,8 +124,8 @@ This placeholder will display a rectangle.
 - `width` (String|Number) [Optional]: The width of rectangle.
 - `height` (String|Number) [Optional]: The height of rectangle.
 - `align` (String) [Optional]: If you set a width(such as `300`) lower than the real width of original component,
-the rectangle will not fill in the full width, but you can use this prop to set the align.
-Support `left`, `right`, `center`. Default `center`.
+the rectangle will not fill in the full area, but you can use this prop to set the alignment.
+Support `left`, `right` and `center`. Default `center`.
 
 ### Square
 
