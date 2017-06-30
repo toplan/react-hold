@@ -1,7 +1,7 @@
 import HoC from './HoC'
 
 /**
- * The decorator make component holdable.
+ * A decorator make component has a placeholder.
  *
  * @param {Function} condition
  * @param {Component} holder

@@ -23,8 +23,8 @@ const envDefaultStyle = {
 }
 
 /**
- * Hold the target component,
- * returns a holdable higher-order component.
+ * Create a higher-order component to manage
+ * original component and placeholder component.
  *
  * @param {Component|String} targetComponent
  * @param {Function} condition
@@ -35,7 +35,7 @@ const envDefaultStyle = {
 export default function (targetComponent, condition,
   defaultHolder = Fill, holderDefaultProps = {}) {
   if (!isFunction(targetComponent) && typeof targetComponent !== 'string') {
-    throw new TypeError('Expected the target component to be a react or dom component.')
+    throw new TypeError('Expected the target component to be a string or class/function.')
   }
 
   if (!isFunction(condition)) {
@@ -262,7 +262,7 @@ export default function (targetComponent, condition,
   Hold.propTypes = {
     holder: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     holderProps: PropTypes.object,
-    props: PropTypes.object, // the alias of 'holderProps'
+    props: PropTypes.object, // The alias of 'holderProps'
     innerRef: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   }
 
