@@ -73,22 +73,23 @@ import hold, { holdify } from 'react-hold'
 
 ### hold(Component, condition, [defaultHolder], [holderDefaultProps])
 
-Create a higher-order component to manage the original component and [placeholder](#placeholders) component.
+This is a default API, and it's a higher-order component.
+Use it to create a Hold component as a manager to manage the original component and [placeholder](#placeholders) component.
 
 ##### Arguments
 
 - `Component` (Component) [Required]: The target(original) component, should be a dumb(presentational) component.
 - `condition` (Function) [Required]: The condition function will be called with arguments `props` and `prevProps`.
 It needs to returns a boolean value to judge whether to show the placeholder component(`true` means yes).
-If returns `false`, the higher-order component will remove the placeholder component, and show the original component.
+If returns `false`, the Hold component will remove the placeholder component, and show the original component.
 - `defaultHolder` (Component) [Optional]: The default placeholder component. Default [Fill](#fill).
 - `holderDefaultProps` (Object) [Optional]: The default props of placeholder component.
 
 ##### Returns
 
-(Component): A higher-order component, control the display of original component and placeholder component.
+(Component): The Hold component which can automatically control the display of original component and placeholder component.
 
-The higher-order component supports these props:
+This component supports these props:
 - `holder` (Component) [Optional]: The placeholder component, will override the default placeholder.
 - `holderProps` (Object) [Optional]: The props of placeholder component, will shallow override the default props.
 - `props` (Object) [Optional]: The alias of `holderProps`.
@@ -110,8 +111,8 @@ You can import the built-in placeholders from `react-hold/holders`, every differ
 
 ##### Common Props
 - `color` (String) [Optional]: The color of placeholder. Default `#eee`.
-- `cancelHold` (Function): Invoking this function to cancel hold shape and display the original component. This is injected by the higher-order component, can't be override.
-- `targetProps` (Function): The props of the target(original) component. This is injected by the higher-order component, can't be override.
+- `cancelHold` (Function): Invoking this function to cancel hold shape and display the original component. This is injected by the Hold component, can't be override.
+- `targetProps` (Function): The props of the target(original) component. This is injected by the Hold component, can't be override.
 - `children` [Optional]
 
 ### Fill

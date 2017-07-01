@@ -23,8 +23,11 @@ const envDefaultStyle = {
 }
 
 /**
- * Create a higher-order component to manage
- * original component and placeholder component.
+ * A higher-order component to create a Hold component as a manager
+ * to manage the original component and placeholder component.
+ *
+ * If the condition is returns `true`, the placeholder component will be displayed.
+ * Otherwise, the target(original) component will be displayed.
  *
  * @param {Component|String} targetComponent
  * @param {Function} condition
