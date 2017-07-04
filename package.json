@@ -72,6 +72,7 @@
     "less-loader": "^4.0.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-hold-animation": "^0.1.1",
     "react-test-renderer": "^15.6.1",
     "regenerator-runtime": "^0.10.5",
     "rimraf": "^2.6.1",

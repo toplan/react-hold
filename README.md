@@ -89,13 +89,13 @@ If returns `false`, the Hold component will remove the placeholder component, an
 
 (Component): The Hold component which can automatically control the display of original component and placeholder component.
 
-This component supports these props:
+The Hold component supports these props:
 - `holder` (Component) [Optional]: The placeholder component, will override the default placeholder.
 - `holderProps` (Object) [Optional]: The props of placeholder component, will shallow override the default props.
 - `props` (Object) [Optional]: The alias of `holderProps`.
 - `innerRef` (Function|String) [Optional]: The ref of original component.
 
-> The rest props will be passed to the original component.
+The rest props will be passed to the original component.
 
 ### holdify(condition, [defaultHolder], [holderDefaultProps])
 
@@ -107,12 +107,14 @@ The handy decorator made by `hold` API.
 import { Fill, Square, Circle, Text, Table } from 'react-hold/holders'
 ```
 
-You can import the built-in placeholders from `react-hold/holders`, every different placeholders use to display a different content.
+You can import the built-in placeholders from `react-hold/holders`, every different placeholders will display a different content.
 
 ##### Common Props
 - `color` (String) [Optional]: The color of placeholder. Default `#eee`.
-- `cancelHold` (Function): Invoking this function to cancel hold shape and display the original component. This is injected by the Hold component, can't be override.
-- `targetProps` (Function): The props of the target(original) component. This is injected by the Hold component, can't be override.
+- `cancelHold` (Function): Invoking this function to manually cancel hold the shape of the original component.
+This is injected by the Hold component, can't be override.
+- `targetProps` (Function): The props of the target(original) component.
+This is injected by the Hold component, can't be override.
 - `children` [Optional]
 
 ### Fill
@@ -162,6 +164,11 @@ This placeholder will display a table.
 - `rows` (Number) [Optional]: The rows number of table. Default `2`.
 - `gap` (Number) [Optional]: The gap between cols and rows. Default `2`.
 - `align` (String) [Optional]: Similar to the align prop of `Fill`.
+
+# Plugins
+
+- [react-hold-animation](https://github.com/toplan/react-hold-animation):
+A higher-order component be use for add animation to the placeholder.
 
 # License
 
