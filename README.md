@@ -2,8 +2,6 @@
 
 Automatically show a well-fitting placeholder for dumb component while its content is loading. [[Demo here]](http://toplan.github.io/react-hold/)
 
-> What is the meaning of the word **`hold`** in this project? It's means keep(hold) the shape of the dumb component if it without content. You can also see it as an action which make the dumb component has a placeholder.
-
 [![build status](https://travis-ci.org/toplan/react-hold.svg?branch=master)](https://travis-ci.org/toplan/react-hold)
 [![codecov](https://codecov.io/gh/toplan/react-hold/branch/master/graph/badge.svg)](https://codecov.io/gh/toplan/react-hold)
 [![npm version](https://img.shields.io/npm/v/react-hold.svg)](https://www.npmjs.com/package/react-hold)
@@ -11,10 +9,16 @@ Automatically show a well-fitting placeholder for dumb component while its conte
 
 ![react-hold-article](http://toplan.github.io/img/react-hold-article.gif)
 
+- [APIs](#api)
+- [Placeholders](#placeholders)
+- [Plugins](#plugins)
+
+> What is the meaning of the word **`hold`** in this project? It's means keep(hold) the shape of the dumb component if it without content. You can also see it as an action which make the dumb component has a placeholder.
+
 # Install
 
 ```
-npm install --save react-hold
+npm i --save react-hold
 ```
 
 # Usage
@@ -169,6 +173,8 @@ This placeholder will display a table.
 
 - [react-hold-animation](https://github.com/toplan/react-hold-animation):
 A higher-order component be use for add animation to the placeholder.
+
+> More cool plugins is in the todo list.
 
 # License
 

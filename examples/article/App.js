@@ -2,7 +2,7 @@ import './style.css'
 import React, { Component } from 'react'
 import hold from 'react-hold'
 import { Fill, Circle, Text } from 'react-hold/holders'
-import animation, { animate, BLINK } from 'react-hold-animation'
+import animation, { BLINK } from 'react-hold-animation'
 import { H, Img, P, Span } from '$components'
 import image from '../_img/james-k-nelson.jpg';
 
